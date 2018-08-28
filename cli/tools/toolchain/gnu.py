@@ -1,0 +1,100 @@
+from __future__ import print_function, division, absolute_import
+from tools.toolchain import arcToolchain
+from distutils.spawn import find_executable
+from tools.cmd import pquery
+import re
+import os
+from .. document_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)
+
+class Gnu(arcToolchain):
+
+	version = "2017.09"
+	root_url = "https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/"
+	pack = None
+	path = None
+	executable_name = "arc-elf32-gcc"
+
+	def __init__(self):
+		exe = find_executable(self.executable_name)
+		if exe:
+			self.path = os.path.split(exe)[0]
+			self.version = self.get_version()
+
+	@staticmethod
+	def get_version():
+		cmd = ["arc-elf32-gcc", "--version"]
+		try:
+			exe = pquery(cmd)
+			version = re.search(r"[0-9]*\.[0-9]*",exe).group(0)
+			if version:
+				
+				return version
+		except Exception as e:
+			print(e)
+			return None
+
+	def set_version(self):
+		version = self.get_version()
+		if version:
+			self.version = version
+
+	def download_gnu(self, version=None, path=None):
+		if version is None:
+			version = self.version
+		url = self.root_url + version + "-release/arc_gnu_"  + version+ "_prebuilt_elf32_le_linux_install.tar.gz"
+		pack_tgz = "arc_gnu_" + version + "_prebuilt_elf32_le_linux_install.tar.gz"
+		if path is None:
+			path = getcwd()
+		gnu_tgz_path = os.path.join(path, "arc_gnu_" + version +"_prebuilt_elf32_le_linux_install.tar.gz")
+		if not os.path.exists(path):
+			mkdir(path)
+		if gnu_tgz in os.listdir(path):
+			print("gnu tgz already exists")
+		else:
+			result = download_file(url, gnu_tgz_path)
+			if not result:
+				print("download gnu failed")
+				gnu_tgz_path = None
+		self.pack = gnu_tgz_path
+		return gnu_tgz_path
+
+	def extract_gnu_file(self, pack=None, path=None):
+		'''extract gnu file from pack to path;
+		pack - the path of the compressed package
+		path - the compressed package is extracted to this path
+		return the root path of gnu and set self.path'''
+		pack = self.pack
+		if path is None:
+			path = getcwd()
+		if pack is None:
+			print("please download {} first".format(pack))
+			return False
+		
+		else:
+			version = re.search(r"[0-9]*\.[0-9]*", pack).group(0)
+			if version in os.listdir(path):
+				delete_dir_files(version)
+			try:
+				gnu_file_path = extract_file(self.pack, path)
+			except Exception as e:
+				print(e)
+			if gnu_file_path is not None:
+				self.path = os.path.join(path, version, "bin")
+				shutil.move(gnu_file_path, self.path)
+				return self.path
+
+	def set_gnu_env(self):
+		self.set_toolchain_env("gnu")
+		print("set env")
+
+
+
+
+
+
+
+
+
+
+
+
