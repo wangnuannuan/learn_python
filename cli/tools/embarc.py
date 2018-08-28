@@ -1,5 +1,5 @@
 import argparse
-
+from tools.document_manager import (getcwd, cd)
 parser = argparse.ArgumentParser(prog='embarc',
     description="Command-line code management tool for embarc osp ",formatter_class=argparse.RawTextHelpFormatter)
 subparsers = parser.add_subparsers(title="Commands", metavar="           ")
@@ -58,6 +58,14 @@ def subcommand(name, *args, **kwargs):
     dict(name='--guide', action='store_true', help='Create programm setp by step.'),
     description=(
         "Creates a new embarc program if executed within a non-program location.\n"))
-def new(name, path=None):
+def new(name, path=None, guide=False):
+    work_path = getcwd()
+    file_path = os.path.abspath(__file__)
 
-	if 
+	if path is None:
+        path = getcwd()
+    cd(path)
+    if os.path.exists(name) and os.path.isdir(name):
+        print(" Can not create programm %s , a folder has the same name has exists " % (name))
+        return False
+
