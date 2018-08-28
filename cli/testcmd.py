@@ -25,7 +25,7 @@ print isurl.group()
 isinsecure = repo.Repo.isinsecure("https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_osp")
 print isinsecure'''
 
-url = "https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_applications.git"
+'''url = "https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_applications.git"
 path = os.getcwd()
 repo = repo.Repo.fromurl(url, path=os.getcwd())
 
@@ -36,6 +36,12 @@ repo.clone(url,path=os.path.join(path,"embarc_applications"), rev=None, depth=No
 
 repo.sync()
 repo.write()
-print("repo",repo.revtype(repo.rev))
+print("repo",repo.revtype(repo.rev))'''
 
 #repo.rm_untracked()
+print(os.path.abspath(__file__))
+print(__file__)
+
+from tools.document_manager import copy_file
+
+copy_file()

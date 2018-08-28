@@ -5,7 +5,7 @@ import urllib
 import contextlib
 from os import listdir, remove, makedirs
 import sys
-
+from shutil import copyfile
 cwd_root = ""
 _cwd = os.getcwd()
 
@@ -54,6 +54,19 @@ def delete_dir_files(directory):
         to_remove = join(directory, element)
         if not isdir(to_remove):
             remove(to_remove)
+
+def copy_file(src, dst):
+    """ Implement the behaviour of "shutil.copy(src, dst)" without copying the
+    permissions (this was causing errors with directories mounted with samba)
+
+    Positional arguments:
+    src - the source of the copy operation
+    dst - the destination of the copy operation
+    """
+    if os.path.isdir(dst):
+        _, base = os.path.split(src)
+        dst = os.path.join(dst, base)
+    copyfile(src, dst)          
             
 def download_file(url, path):
     try:

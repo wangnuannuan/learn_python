@@ -68,4 +68,10 @@ def new(name, path=None, guide=False):
     if os.path.exists(name) and os.path.isdir(name):
         print(" Can not create programm %s , a folder has the same name has exists " % (name))
         return False
+    template_path = os.path.join(os.path.split(file_path)[0], "template")
+    if os.path.exists(template_path): # copy main.c and makefile to programm folder
+        copy_file(template_path, path)
+    
+
+
 
