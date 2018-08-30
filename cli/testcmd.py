@@ -46,5 +46,12 @@ from tools.download_manager import copy_file
 
 copy_file()'''
 from tools.toolchain import gnu
+from tools.download_manager import delete_dir_files,untar
 import urllib
-urllib.urlretrieve("https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/arc-2018.03-release/arc_gnu_2018.03_prebuilt_elf32_be_linux_install.tar.gzs",os.getcwd())
+#delete_dir_files("2018.03",True)
+path = os.path.join(os.getcwd(),"arc_gnu_2018.03_prebuilt_elf32_le_linux_install.tar.gz")
+path1 =os.path.join(os.getcwd(),"arc_gnu_2018.03_prebuilt_elf32_le_linux_install")
+#urllib.urlretrieve("https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/arc-2018.03-release/arc_gnu_2018.03_prebuilt_elf32_be_linux_install.tar.gz",path)
+#gnu = gnu.Gnu()
+#gnu.extract_file(path)
+untar(path,os.getcwd())

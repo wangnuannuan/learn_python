@@ -24,7 +24,7 @@ def popen(command, stdin=None, **kwargs):
         raise ProcessException(proc.returncode, command[0], ' '.join(command), getcwd())
 
 def pquery(command, output_callback=None, stdin=None, **kwargs):
-
+    proc = None
     try:
         proc = subprocess.Popen(command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
     except OSError as e:
@@ -35,6 +35,11 @@ def pquery(command, output_callback=None, stdin=None, **kwargs):
                 "Please verify that it's installed and accessible from your current path by executing \"%s\".\n" % (command[0], command[0]), e.args[0])
         else:
             raise e
+    if proc is None:
+        print(
+                "Could not execute \"%s\".\n"
+                "Please verify that it's installed and accessible from your current path by executing \"%s\".\n" % (command[0], command[0]), e.args[0])
+        return None
 
     if output_callback:
         line = ""

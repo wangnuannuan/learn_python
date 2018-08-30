@@ -6,6 +6,7 @@ import contextlib
 from os import listdir, remove, makedirs
 import sys
 from shutil import copyfile
+import shutil
 import zipfile, tarfile
 cwd_root = ""
 _cwd = os.getcwd()
@@ -47,7 +48,7 @@ def rmtree_readonly(directory):
             func(path)
         shutil.rmtree(directory, onerror=remove_readonly)
 
-def delete_dir_files(directory):
+def delete_dir_files(directory, dir=False):
     """ A function that does rm -rf
 
     Positional arguments:
@@ -58,10 +59,13 @@ def delete_dir_files(directory):
     if os.path.isfile(directory):
         remove(directory)
     else:
-        for element in listdir(directory):
-            to_remove = join(directory, element)
-            if not isdir(to_remove):
-                remove(to_remove)
+        if not dir:
+            for element in listdir(directory):
+                to_remove = os.path.join(directory, element)
+                if not os.path.isdir(to_remove):
+                    remove(to_remove)
+        else:
+            shutil.rmtree(directory)
 
 def copy_file(src, dst):
     """ Implement the behaviour of "shutil.copy(src, dst)" without copying the
@@ -105,18 +109,18 @@ def unzip(file, path):
     return file_name
 
 def untar(file, path):
-	file_name = None
-	try:
-		pack = tarfile.open(file, "r:gz")
-		files = pack.getnames()
-		file_name = files[0]
-		for file in files:
-			pack.extract(file, path)
-		pack.close()
-		
-	except Exception as e:
-		print(e)
+    file_name = None
+    try:
+        pack = tarfile.open(file, "r:gz")
+        files = pack.getnames()
+        file_name = files[0]
+        for file in files:
+            pack.extract(file, path)
+        pack.close()
+    except Exception as e:
+        print(e)
     return file_name
+    
 
 def extract_file(file, path):
 	extract_file_name = None

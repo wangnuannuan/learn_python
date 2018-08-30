@@ -23,14 +23,18 @@ class arcToolchain:
 		if not self.is_supported(tool_key):
 			return False
 		else:
-			exe = find_executable(executable_name)
-			if not exe:
+			try:
+			    exe = find_executable(executable_name)
+			    if not exe:
+			    	print("can not execuate {}".format(executable_name))
+			    	return False
+			    toolchian_path = os.path.split(exe)
+			    TOOLCHAIN_PATHS[tool_key] = toolchian_path
+			    return True
+			except Exception as e:
+				print(e)
 				return False
-			else:
-				toolchian_path = os.path.split(exe)
-				TOOLCHAIN_PATHS[tool_key] = toolchian_path
-				return True
-				
+			
 	@staticmethod
 	def is_supported(tool_key):
 		'''check if tool_key is supported'''
