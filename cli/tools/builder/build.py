@@ -2,6 +2,7 @@ import sys
 import os
 import subprocess
 import time
+from .. download_manager import mkdir, delete_dir_files
 
 BUILD_OPTION_NAMES=['BOARD', 'BD_VER', 'CUR_CORE', 'TOOLCHAIN', 'OLEVEL', 'V', 'DEBUG', 'SILENT', 'JTAG']
 BUILD_INFO_NAMES=['EMBARC_ROOT', 'OUT_DIR_ROOT', 'BUILD_OPTION', 'APPLICATION_NAME', 'APPLICATION_LINKSCRIPT', 'APPLICATION_ELF', 'APPLICATION_BIN', 'APPLICATION_HEX', 'APPLICATION_MAP', 'APPLICATION_DUMP', 'APPLICATION_DASM', 'MIDDLEWARE', 'PERIPHERAL']
@@ -11,13 +12,14 @@ BUILD_SIZE_SECTION_NAMES=['text', 'data', 'bss']
 class embARC_Builder:
     def __init__(self, osproot=None, buildopts=None, outdir=None):
         self.buildopts = dict()
+        option = str()
 
         make_options = ' '
         if osproot is not None and os.path.isdir(osproot):
             self.osproot = os.path.realpath(osproot)
             make_options += 'EMBARC_ROOT=' + str(self.osproot) + ' '
         else:
-            self.osproot = None ####################
+            self.osproot = None
         if outdir is not None:
             self.outdir = os.path.realpath(outdir)
             make_options += 'OUT_DIR_ROOT=' + str(self.outdir) + ' '
@@ -25,7 +27,7 @@ class embARC_Builder:
             self.outdir = None
 
         for opt in BUILD_OPTION_NAMES:
-            if opt in buildopts:###################
+            if opt in buildopts:
                 self.buildopts[opt] = str(buildopts[opt]).strip()
                 option += str(opt) + '=' + self.buildopts[opt] + ' '
                 make_options += option
@@ -51,7 +53,36 @@ class embARC_Builder:
 
         return app_realpath, build_status
 
-    def build_target(self, app, target=None, parallel=True):
+    def _config_coverity(self, app):
+        app_normpath = os.path.normpath(app)
+        app_realpath=os.path.realpath(app_normpath)
+
+        build_status = {'result': True, 'reason':''}
+        self.coverity_data = os.path.join(app, "coverity_data")
+        self.coverity_config = os.path.join(self.coverity_data, "coverity-config.xml")
+        self.coverity_data = os.path.join(app, "coverity_data")
+        self.coverity_html = os.path.join(app, "coverity_html")
+        if os.path.exists(self.coverity_data):
+            delete_dir_files(self.coverity_data)
+            mkdir(self.coverity_data)
+        if os.path.exists(self.coverity_html):
+            delete_dir_files(self.coverity_html)
+        if self.make_options['TOOLCHAIN'] == 'gnu':
+            self.coverity_comptype = 'gcc'
+            self.coverity_compiler = 'arc-elf32-gcc'
+        elif self.make_options['TOOLCHAIN'] == 'gnu':
+            self.coverity_comptype = 'clangcc'
+            self.coverity_compiler = 'ccac'
+        else:
+            build_status['reason'] = 'Toolchian is not supported!'
+            build_status['result'] = False
+        if build_status['result']:
+            print("BEGIN SECTION Configure Coverity to use the built-incompiler")
+            config_compilercmd = "cov-configure --config " + self.coverity_config + " --template --comptype "+ self.coverity_comptype +" --compiler " + self.coverity_compiler
+            subprocess.Popen(config_compilercmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        return build_status
+
+    def build_target(self, app, target=None, parallel=True, coverity=False):
         app_realpath, build_status = self.build_common_check(app)
         build_status['build_target'] = target
         build_status['time_cost'] = 0
@@ -76,7 +107,14 @@ class embARC_Builder:
             build_status['result'] = False
             return build_status
 
-	time_pre = time.time()
+        if coverity:
+            build_status = self._config_coverity(app)
+            if build_status['result'] == False:
+                return build_status
+            coverity_build_precmd = "cov-build --config " + self.coverity_config + " --dir " + self.coverity_data
+            build_cmd = coverity_build_precmd + " " + build_cmd
+
+        time_pre = time.time()
         build_status['build_cmd'] = build_cmd
         build_status['build_msg'] = ''
         build_proc = subprocess.Popen(build_cmd, shell=True, cwd=str(app_realpath), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -87,16 +125,31 @@ class embARC_Builder:
         except OSError as e:
             print "Run command({}) failed!".format(build_command)
             build_status['build_msg'] = "Build target command failed"
-	    build_status['time_cost'] = (time.time() - time_pre)
+        build_status['time_cost'] = (time.time() - time_pre)
             build_status['result'] = False
             del build_proc
             return build_status
         del build_proc
 
-	build_status['time_cost'] = (time.time() - time_pre)
+        build_status['time_cost'] = (time.time() - time_pre)
         if return_code != 0:
             build_status['result'] = False
         return build_status
+
+    def build_coverity_result(self):
+        print("BEGIN SECTION Coverity Analyze Defects")
+        coverity_analyzecmd = "cov-analyze --dir " + self.coverity_data
+        subprocess.Popen(coverity_analyzecmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print("BEGIN SECTION Coverity Format Errors into HTML")
+        coverity_errorcmd = "cov-format-errors --dir " + self.coverity_data + " -x -X --html-output "+ self.coverity_html
+        subprocess.Popen(coverity_errorcmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    def upload_coverity(self, app, server=None, user=None, password=None):
+        app_name = copy.deepcopy(app).replace("/", "_")
+        print "BEGIN SECTION Coverity Commit defects to {}".format(server)
+        upload_coveritycmd = "cov-commit-defects --dir " + self.coverity_data + " --host "+ server + " --user " + user + 
+            " --password " + password
+        subprocess.Popen(upload_coveritycmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def get_build_info(self, app):
         build_status = self.build_target(app, target='opt')
@@ -262,38 +315,3 @@ class embARC_Builder:
     def boardclean(self, app):
         build_status = self.build_target(app, target='boardclean')
         return build_status
-
-    def upload_coverity(server, user, password):
-
-
-app_path = '../../../example/baremetal/bootloader/'
-app_builder = embARC_Builder(outdir='cur')
-#app_builder = embARC_Builder()
-build_status = app_builder.build_elf(app_path, pre_clean=True, post_clean=True)
-print build_status['build_cmd']
-print build_status['time_cost']
-print build_status['build_msg']
-build_status = app_builder.build_bin(app_path, pre_clean=True, post_clean=True)
-print build_status['build_cmd']
-print build_status['time_cost']
-print build_status['build_msg']
-build_status = app_builder.build_hex(app_path, pre_clean=True, post_clean=True)
-print build_status['build_cmd']
-print build_status['time_cost']
-print build_status['build_msg']
-
-build_status = app_builder.build_target(app_path, target='size')
-print build_status['build_cmd']
-print build_status['time_cost']
-print build_status['build_msg']
-
-
-build_status = app_builder.get_build_size(app_path)
-print build_status['build_cmd']
-print build_status['time_cost']
-print build_status['build_msg']
-print build_status['build_size']
-
-print app_builder.get_build_info(app_path)
-
-app_builder.distclean(app_path)

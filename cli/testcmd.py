@@ -39,9 +39,12 @@ repo.write()
 print("repo",repo.revtype(repo.rev))'''
 
 #repo.rm_untracked()
-print(os.path.abspath(__file__))
+'''print(os.path.abspath(__file__))
 print(__file__)
 
 from tools.download_manager import copy_file
 
-copy_file()
+copy_file()'''
+from tools.toolchain import gnu
+import urllib
+urllib.urlretrieve("https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/arc-2018.03-release/arc_gnu_2018.03_prebuilt_elf32_be_linux_install.tar.gzs",os.getcwd())

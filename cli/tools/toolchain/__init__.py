@@ -30,8 +30,9 @@ class arcToolchain:
 				toolchian_path = os.path.split(exe)
 				TOOLCHAIN_PATHS[tool_key] = toolchian_path
 				return True
-
-	def is_supported(self, tool_key):
+				
+	@staticmethod
+	def is_supported(tool_key):
 		'''check if tool_key is supported'''
 		if tool_key not in SUPPORT_TOOLCHAIN:
 			print("This toolchian is not supported")
@@ -55,7 +56,7 @@ class arcToolchain:
 			windows_env_set_arc.set_env_path(env_obj,'path', toolchain_root)
 			return True
 		elif platform  == "Linux":
-			file_path = os.path.basename(os.path.abspath(__file__))
+			file_path = os.path.dirname(os.path.abspath(__file__))
 			work_path = getcwd()
 			sh_script = os.path.join(file_path, "linux_env_set_arc.sh")
 			command = ["bash", sh_path, "-t", tool_key, "-r", toolchain_root]

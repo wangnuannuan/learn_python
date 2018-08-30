@@ -24,7 +24,7 @@ class Gnu(arcToolchain):
 		exe = find_executable(self.executable_name)
 		if exe:
 			self.path = os.path.split(exe)[0]
-			self.version = self.get_version()
+			self.version = self.check_version()
 
 	@staticmethod
 	def check_version():
@@ -60,7 +60,7 @@ class Gnu(arcToolchain):
 		gnu_tgz_path = os.path.join(path, "arc_gnu_" + version +"_prebuilt_elf32_le_linux_install.tar.gz")
 		if not os.path.exists(path):
 			mkdir(path)
-		if gnu_tgz in os.listdir(path):
+		if pack_tgz in os.listdir(path):
 			print("gnu tgz already exists")
 		else:
 			result = download_file(url, gnu_tgz_path)
@@ -75,19 +75,20 @@ class Gnu(arcToolchain):
 		pack - the path of the compressed package
 		path - the compressed package is extracted to this path
 		return the root path of gnu and set self.path'''
-		pack = self.pack
+		if pack is None:
+			pack = self.pack
 		if path is None:
 			path = getcwd()
 		if pack is None:
-			print("please download {} first".format(pack))
+			print("please download gnu file first")
 			return False
-		
+
 		else:
 			version = re.search(r"[0-9]*\.[0-9]*", pack).group(0)
 			if version in os.listdir(path):
 				delete_dir_files(version)
 			try:
-				gnu_file_path = extract_file(self.pack, path)
+				gnu_file_path = extract_file(pack, path)
 			except Exception as e:
 				print(e)
 			if gnu_file_path is not None:

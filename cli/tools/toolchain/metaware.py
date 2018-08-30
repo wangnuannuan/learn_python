@@ -15,7 +15,7 @@ class Mw(arcToolchain):
 		exe = find_executable(self.executable_name)
 		if exe:
 			self.path = os.path.split(exe)[0]
-			self.version = self.get_version()
+			self.version = self.check_version()
 
 	@staticmethod
 	def check_version():

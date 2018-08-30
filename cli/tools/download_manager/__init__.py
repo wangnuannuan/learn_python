@@ -6,7 +6,7 @@ import contextlib
 from os import listdir, remove, makedirs
 import sys
 from shutil import copyfile
-
+import zipfile, tarfile
 cwd_root = ""
 _cwd = os.getcwd()
 
@@ -53,13 +53,15 @@ def delete_dir_files(directory):
     Positional arguments:
     directory - the directory to remove
     """
-    if not exists(directory):
+    if not os.path.exists(directory):
         return
-
-    for element in listdir(directory):
-        to_remove = join(directory, element)
-        if not isdir(to_remove):
-            remove(to_remove)
+    if os.path.isfile(directory):
+        remove(directory)
+    else:
+        for element in listdir(directory):
+            to_remove = join(directory, element)
+            if not isdir(to_remove):
+                remove(to_remove)
 
 def copy_file(src, dst):
     """ Implement the behaviour of "shutil.copy(src, dst)" without copying the
@@ -78,28 +80,29 @@ def download_file(url, path):
     '''from url download file to path. if failed ,return False. else return True'''
     try:
     	urllib.urlretrieve(url, path)
-    	return True
     except Exception as e:
     	print(e)
     	print("This file from %s can't be download"%(url))
     	sys.stdout.flush()
     	return False
+    return True
 
 def unzip(file, path):
     '''extract file from .zip to path
     file - the path of zip
     path - the dest path
     return directory name after decompression'''
-	file_name = None
-	try:
-		pack = zipfile.ZipFile(file, "r")
-		files = pack.namelist()
-		file_name = files[0]
-		pack.extractall(path)
-		pack.close()
-		return file_name
-	except Exception:
-		sys.exit(1)
+    file_name = None
+    try:
+        pack = zipfile.ZipFile(file, "r")
+        files = pack.namelist()
+        file_name = files[0]
+        pack.extractall(path)
+        pack.close()
+        
+    except Exception as e:
+        print(e)
+    return file_name
 
 def untar(file, path):
 	file_name = None
@@ -110,9 +113,10 @@ def untar(file, path):
 		for file in files:
 			pack.extract(file, path)
 		pack.close()
-		return file_name
+		
 	except Exception as e:
 		print(e)
+    return file_name
 
 def extract_file(file, path):
 	extract_file_name = None
