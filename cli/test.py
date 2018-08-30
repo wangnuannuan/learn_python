@@ -5,7 +5,7 @@ from fixture import Destructing
 from tools.download_manager import delete_dir_files
 from fixture import Destructing
 from tools.toolchain import arcToolchain, gnu, metaware
-
+import coverage
 class TestTemplate(Destructing):
 	def setUp(self):
 		super(TestTemplate, self).setUp()
@@ -17,6 +17,7 @@ class TestTemplate(Destructing):
 		pass
 		#delete_dir_files("makefile")
 		#self._del_to_be_sure("config")
+
 
 class TestToolchain(Destructing):
 	def setUp(self):
@@ -58,11 +59,23 @@ class TestToolchain(Destructing):
 		#self._del_to_be_sure("gnu")
 		#self._del_to_be_sure("mw")
 
+
 if __name__=='__main__':
+	COV = coverage.coverage(branch=True, include='tools/*')
+	COV.start()
 	suit1 = unittest.TestLoader().loadTestsFromTestCase(TestTemplate)
 	suit2 = unittest.TestLoader().loadTestsFromTestCase(TestToolchain)
 	suite = unittest.TestSuite([suit1, suit2])
 	unittest.TextTestRunner(verbosity=2).run(suite)
+	COV.stop()
+	COV.save()
+	print('Coverage Summary:')
+	COV.report()
+	basedir = os.path.abspath(os.path.dirname(__file__))
+	covdir = os.path.join(basedir, 'tmp/coverage')
+	COV.html_report(directory=covdir)
+	print('HTML version: file://%s/index.html' % covdir)
+	COV.erase()
 	#all_cases = unittest.defaultTestLoader.discover('.','test_*.py')
 	'''suite = unittest.TestSuite()
 
