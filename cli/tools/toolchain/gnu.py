@@ -1,14 +1,20 @@
 from __future__ import print_function, division, absolute_import
-from tools.toolchain import arcToolchain
+from tools.toolchain import arcToolchain, ProcessException
 from distutils.spawn import find_executable
 from tools.cmd import pquery
 import re
 import os
-from .. document_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)
+from .. download_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)
 
 class Gnu(arcToolchain):
+	'''
+	version: default version is 2017.09
+	root_url: from this url to down load gnu
+	pack: where the gnu archive is 
+	executable_name: a command will be used when check gnu 
+	'''
 
-	version = "2017.09"
+	version = "2017.09" 
 	root_url = "https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/"
 	pack = None
 	path = None
@@ -21,7 +27,8 @@ class Gnu(arcToolchain):
 			self.version = self.get_version()
 
 	@staticmethod
-	def get_version():
+	def check_version():
+		'''run command "arc-elf32-gcc--version" and return current gnu version'''
 		cmd = ["arc-elf32-gcc", "--version"]
 		try:
 			exe = pquery(cmd)
@@ -29,16 +36,21 @@ class Gnu(arcToolchain):
 			if version:
 				
 				return version
-		except Exception as e:
-			print(e)
+		except ProcessException:
 			return None
 
-	def set_version(self):
-		version = self.get_version()
+	def _set_version(self):
+		'''get current gnu version and set the self.version'''
+		version = self.check_version()
 		if version:
 			self.version = version
 
-	def download_gnu(self, version=None, path=None):
+	def download(self, version=None, path=None):
+		'''
+		version - gnu version
+		path - where the gnu package will be stored
+		download gnu package and return the package path
+		'''
 		if version is None:
 			version = self.version
 		url = self.root_url + version + "-release/arc_gnu_"  + version+ "_prebuilt_elf32_le_linux_install.tar.gz"
@@ -58,7 +70,7 @@ class Gnu(arcToolchain):
 		self.pack = gnu_tgz_path
 		return gnu_tgz_path
 
-	def extract_gnu_file(self, pack=None, path=None):
+	def extract_file(self, pack=None, path=None):
 		'''extract gnu file from pack to path;
 		pack - the path of the compressed package
 		path - the compressed package is extracted to this path
@@ -83,9 +95,9 @@ class Gnu(arcToolchain):
 				shutil.move(gnu_file_path, self.path)
 				return self.path
 
-	def set_gnu_env(self):
-		self.set_toolchain_env("gnu")
-		print("set env")
+	def set_env(self, path=None):
+		'''set environment'''
+		self.set_toolchain_env("gnu", path)
 
 
 

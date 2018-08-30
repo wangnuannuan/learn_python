@@ -10,7 +10,7 @@ except NameError:
     from urllib.parse import urlparse, quote
 import re
 import os
-from .. document_manager import (getcwd, cd, rmtree_readonly, cwd_root, relpath)
+from .. download_manager import (getcwd, cd, rmtree_readonly, cwd_root, relpath)
 from tools.osp import (formaturl,regex_local_ref,regex_url_ref, scms, ProcessException)
 
 class Repo(object):

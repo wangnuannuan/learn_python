@@ -1,8 +1,8 @@
 from __future__ import print_function, absolute_import
 import re
 import os
-from .. document_manager import (show_progress, hide_progress)
-from tools.cmd import pquery
+from .. download_manager import (show_progress, hide_progress)
+from tools.cmd import pquery, popen
 
 regex_repo_url = r'^(git\://|file\://|ssh\://|https?\://|)(([^/:@]+)(\:([^/:@]+))?@)?([^/:]{3,})(\:\d+)?[:/](.+?)(\.git|\.hg|\/?)$'
 regex_url_ref = r'^(.*/([\w.+-]+)(?:\.\w+)?)/?(?:#(.*))?$'

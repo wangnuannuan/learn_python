@@ -4,7 +4,7 @@ from distutils.spawn import find_executable
 from tools.cmd import pquery
 import re
 import os
-from .. document_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)
+from .. download_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)
 
 class Mw(arcToolchain):
 	version = "2017.09"
@@ -18,7 +18,7 @@ class Mw(arcToolchain):
 			self.version = self.get_version()
 
 	@staticmethod
-	def get_version():
+	def check_version():
 		cmd = ["ccac", "-v"]
 		try:
 			exe = pquery(cmd)
@@ -29,15 +29,15 @@ class Mw(arcToolchain):
 			print(e)
 			return None
 
-	def set_version(self):
-		version = self.get_version()
+	def _set_version(self):
+		version = self.check_version()
 		if version:
 			self.version = version
 
-	def download_mw(self, version=None, path=None):
+	def download(self, version=None, path=None):
 		pass
 
-	def extract_mw_file(self, pack=None, path=None):
+	def extract_file(self, pack=None, path=None):
 		'''extract gnu file from pack to path;
 		pack - the path of the compressed package
 		path - the compressed package is extracted to this path
@@ -45,6 +45,5 @@ class Mw(arcToolchain):
 		pass
 
 
-	def set_mw_env(self):
-		self.set_toolchain_env("gnu")
-		print("set env")
+	def set_env(self, path=None):
+		self.set_toolchain_env("mw", path)

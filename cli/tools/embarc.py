@@ -1,5 +1,5 @@
 import argparse
-from tools.document_manager import (getcwd, cd)
+from tools.download_manager import (getcwd, cd)
 parser = argparse.ArgumentParser(prog='embarc',
     description="Command-line code management tool for embarc osp ",formatter_class=argparse.RawTextHelpFormatter)
 subparsers = parser.add_subparsers(title="Commands", metavar="           ")

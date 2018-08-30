@@ -6,15 +6,18 @@ import contextlib
 from os import listdir, remove, makedirs
 import sys
 from shutil import copyfile
+
 cwd_root = ""
 _cwd = os.getcwd()
 
 def getcwd():
+    '''return current working path '''
     global _cwd
     return _cwd
 
 @contextlib.contextmanager
 def cd(newdir):
+    '''A function that does cd'''
     global _cwd
     prevdir = getcwd()
     os.chdir(newdir)
@@ -25,14 +28,17 @@ def cd(newdir):
         os.chdir(prevdir)
         _cwd = prevdir
 
-def relpath(root, path): # relative path
+def relpath(root, path):
+    '''return the relative path of root and path'''
     return path[len(root)+1:]
 
 def mkdir(path):
+    '''A function that does mkdir'''
     if not exists(path):
         makedirs(path)
 
 def rmtree_readonly(directory):
+    '''change permission and delete directory'''
     if os.path.islink(directory):
         os.remove(directory)
     else:
@@ -69,6 +75,7 @@ def copy_file(src, dst):
     copyfile(src, dst)          
             
 def download_file(url, path):
+    '''from url download file to path. if failed ,return False. else return True'''
     try:
     	urllib.urlretrieve(url, path)
     	return True
@@ -79,6 +86,10 @@ def download_file(url, path):
     	return False
 
 def unzip(file, path):
+    '''extract file from .zip to path
+    file - the path of zip
+    path - the dest path
+    return directory name after decompression'''
 	file_name = None
 	try:
 		pack = zipfile.ZipFile(file, "r")
@@ -118,6 +129,7 @@ def extract_file(file, path):
 	return extract_file_path
 
 def show_progress(title, percent, max_width=80):
+    '''show progress when download file'''
     if sys.stdout.isatty():
         percent = round(float(percent), 2)
         show_percent = '%.2f' % percent

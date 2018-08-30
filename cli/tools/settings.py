@@ -1,3 +1,4 @@
+import platform
 SUPPORTED_BOARDS = ["emsk", "axs", "hsdk", "nsim"]
 
 BOARD_VERSION = {"emsk": ["11", "22" ,"23"], "axs": ["103"], "hsdk": ["10"], "nsim": ["10"]}
@@ -15,3 +16,5 @@ SUPPORTED_CORES = {
 GNU_PATH = ""
 MW_PATH = ""
 SUPPORT_TOOLCHAIN = ["gnu", "mw"]
+OSP_PATH = ""
+CURRENT_PLATFORM = platform.system()

@@ -17,7 +17,7 @@ class embARC_Builder:
             self.osproot = os.path.realpath(osproot)
             make_options += 'EMBARC_ROOT=' + str(self.osproot) + ' '
         else:
-            self.osp_root = None
+            self.osproot = None ####################
         if outdir is not None:
             self.outdir = os.path.realpath(outdir)
             make_options += 'OUT_DIR_ROOT=' + str(self.outdir) + ' '
@@ -25,7 +25,7 @@ class embARC_Builder:
             self.outdir = None
 
         for opt in BUILD_OPTION_NAMES:
-            if opt in self.buildopts:
+            if opt in buildopts:###################
                 self.buildopts[opt] = str(buildopts[opt]).strip()
                 option += str(opt) + '=' + self.buildopts[opt] + ' '
                 make_options += option
@@ -262,6 +262,9 @@ class embARC_Builder:
     def boardclean(self, app):
         build_status = self.build_target(app, target='boardclean')
         return build_status
+
+    def upload_coverity(server, user, password):
+
 
 app_path = '../../../example/baremetal/bootloader/'
 app_builder = embARC_Builder(outdir='cur')
