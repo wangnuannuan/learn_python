@@ -1,3 +1,4 @@
+from __future__ import print_function, absolute_import
 import sys
 import os
 import subprocess
@@ -12,7 +13,6 @@ BUILD_SIZE_SECTION_NAMES=['text', 'data', 'bss']
 class embARC_Builder:
     def __init__(self, osproot=None, buildopts=None, outdir=None):
         self.buildopts = dict()
-        option = str()
 
         make_options = ' '
         if osproot is not None and os.path.isdir(osproot):
@@ -26,13 +26,14 @@ class embARC_Builder:
         else:
             self.outdir = None
 
-        for opt in BUILD_OPTION_NAMES:
-            if opt in buildopts:
-                self.buildopts[opt] = str(buildopts[opt]).strip()
-                option += str(opt) + '=' + self.buildopts[opt] + ' '
-                make_options += option
-
+        if buildopts is not None:
+            for opt in BUILD_OPTION_NAMES:
+                if opt in buildopts:
+                    self.buildopts[opt] = str(buildopts[opt]).strip()
+                    option = str(opt) + '=' + self.buildopts[opt] + ' '
+                    make_options += option
         self.make_options = make_options
+        print(self.make_options)
         pass
 
     @staticmethod
@@ -67,10 +68,10 @@ class embARC_Builder:
             mkdir(self.coverity_data)
         if os.path.exists(self.coverity_html):
             delete_dir_files(self.coverity_html)
-        if self.make_options['TOOLCHAIN'] == 'gnu':
+        if 'gnu' in self.make_options:
             self.coverity_comptype = 'gcc'
             self.coverity_compiler = 'arc-elf32-gcc'
-        elif self.make_options['TOOLCHAIN'] == 'gnu':
+        elif 'mw' in self.make_options:
             self.coverity_comptype = 'clangcc'
             self.coverity_compiler = 'ccac'
         else:
@@ -92,7 +93,7 @@ class embARC_Builder:
 
         ### Check and create output directory
         if self.outdir is not None and os.path.isdir(self.outdir) == False:
-            print "Create application output directory: " + self.outdir
+            print("Create application output directory: " + self.outdir)
             os.makedirs(self.outdir)
 
         build_precmd = "make "
@@ -123,9 +124,9 @@ class embARC_Builder:
             return_code = build_proc.poll()
             build_status['build_msg'] = build_out
         except OSError as e:
-            print "Run command({}) failed!".format(build_command)
+            print("Run command({}) failed!".format(build_command))
             build_status['build_msg'] = "Build target command failed"
-        build_status['time_cost'] = (time.time() - time_pre)
+            build_status['time_cost'] = (time.time() - time_pre)
             build_status['result'] = False
             del build_proc
             return build_status
@@ -137,6 +138,9 @@ class embARC_Builder:
         return build_status
 
     def build_coverity_result(self):
+        app = os.path.dirname(self.coverity_data)
+        app_normpath = os.path.normpath(app)
+        app_realpath=os.path.realpath(app_normpath)
         print("BEGIN SECTION Coverity Analyze Defects")
         coverity_analyzecmd = "cov-analyze --dir " + self.coverity_data
         subprocess.Popen(coverity_analyzecmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -145,10 +149,11 @@ class embARC_Builder:
         subprocess.Popen(coverity_errorcmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def upload_coverity(self, app, server=None, user=None, password=None):
+        app_normpath = os.path.normpath(app)
+        app_realpath=os.path.realpath(app_normpath)
         app_name = copy.deepcopy(app).replace("/", "_")
-        print "BEGIN SECTION Coverity Commit defects to {}".format(server)
-        upload_coveritycmd = "cov-commit-defects --dir " + self.coverity_data + " --host "+ server + " --user " + user + 
-            " --password " + password
+        print("BEGIN SECTION Coverity Commit defects to {}".format(server))
+        upload_coveritycmd = "cov-commit-defects --dir " + self.coverity_data + " --host "+ server + " --user " + user + " --password " + password
         subprocess.Popen(upload_coveritycmd, shell=True, cwd=str(app_realpath),stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     def get_build_info(self, app):
