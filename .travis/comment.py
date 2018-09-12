@@ -22,7 +22,7 @@ if __name__ == '__main__':
     print TOKEN
     '''PR_NUMBER = 1
     REPO_SLUG = "learn_python"
-    TOKEN = "ef703762fe300bdcbf4676b91178c16d9396a2e7"
+    TOKEN = ""
     USER = "wangnuannuan"'''
     
     comment = "```{flake_results}```".format(flake_results=results)
