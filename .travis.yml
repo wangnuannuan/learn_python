@@ -17,7 +17,11 @@ env:
       "context": "travis-ci",
       "target_url": "https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$TRAVIS_JOB_ID"
       }\nDATA'
-
+      COMMENTS=$'curl -so/dev/null --user "$EMBARC_BOT" --request POST
+      https://api.github.com/repos/$TRAVIS_REPO_SLUG/issues/$TRAVIS_PULL_REQUEST/comments
+      --data @- << DATA\n{
+      "body": "travis-ci/$COMMENT"
+      }\nDATA'
 
 branches:
   except:

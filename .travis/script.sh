@@ -12,5 +12,6 @@ die() {
     git checkout -- . || die
     cd .travis || die
     python comment.py || die
-
+    COMMENT="test send comments in bash script"
+    "$COMMENTS" "$COMMENT"
 }
