@@ -24,7 +24,7 @@ branches:
     - gh-pages
 
 before_install:
-  # - bash .travis/before_install.sh
+  - bash .travis/before_install.sh
   # setup git config
   - git config --global user.name "${U_NAME}"
   - git config --global user.email "${U_EMAIL}"
