@@ -3,7 +3,7 @@ import unittest
 import HTMLTestRunner
 from tools.template import template
 from fixture import Destructing
-from tools.download_manager import delete_dir_files,cd
+from tools.download_manager import delete_dir_files,cd, getcwd,copy_file
 from fixture import Destructing
 from tools.toolchain import arcToolchain, gnu, metaware
 import coverage
@@ -16,7 +16,8 @@ class TestTemplate(unittest.TestCase):
 		super(TestTemplate, self).setUp()
 		self.config = {"appl": "testappl", "olevel":"O2", "board":"emsk", "bd_ver":"11", "cur_core":"arcem4", "toolchian":"gnu", "osp_root":"."}
 	def test_render_makefile(self):
-		result = template.render_makefile(self.config)
+		result = template.render_makefile(self.config, path="templateg")
+		copy_file("fixture.py")
 		self.assertTrue(result)
 	def tearDown(self):
 		pass
@@ -122,7 +123,7 @@ class TestBuilder(unittest.TestCase):
 
 	def test_build_target_coverity(self):
 		app_builder = build.embARC_Builder(osproot=self.osp_root, buildopts=self.buildopts, outdir='cur')
-		build_status = app_builder.build_target(self.app_path,target='size',coverity=True)
+		build_status = app_builder.build_target(self.app_path,target='all',coverity=True)
 		app_builder.build_coverity_result()
 		self.assertTrue(build_status["result"])
 		app_builder.distclean(self.app_path)
@@ -134,57 +135,61 @@ class TestBuilder(unittest.TestCase):
 class TestOSP(unittest.TestCase):
 	def setUp(self):
 		self.repourl = "https://github.com/wangnuannuan/embarc_emsk_bsp.git"
+		self.path = os.path.join(getcwd(), "embarc_emsk_bsp")
 
 	def test_formaturl(self):
 		url1 = "https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_osp.git"
-		formurl1 = formaturl(formurl1)
+		formurl1 = formaturl(url1)
 		print(formurl1)
 		url2 = "git@github.com:foss-for-synopsys-dwc-arc-processors/embarc_osp.git"
 		formurl2 = formaturl(url2)
 		print(formurl2)
 
-	def test_git_command1(self):
-		Git.init()
-		Git.clone(self.repourl)
-		Git.add(".")
-		Git.remove("embarc_emsk_bsp")
-		Git.cleanup()
-	def test_git_command2(self):
-		Git.clone(self.repourl)
-		cd("embarc_emsk_bsp")
-		Git.add(".")
-		print(Git.getbranch())
-		Git.commit("just test")
-		Git.publish()
-		Git.fetch()
-		Git.checkout("master")
-		Git.discard()
-		Git.status()
-		Git.dirty()
-		Git.untracked()
+	def test_repo(self):
+		repo1 = repo.Repo.fromurl(self.repourl, path=os.path.join(getcwd(),"test"))
+		print(repo1.name)
+		print(repo1.url)
+		print(repo1.rev)
+		print(repo1.path)
+		print("repo",repo1.revtype(repo1.rev))
+		url = "https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_applications.git"
+		if os.path.exists(os.path.join(getcwd(), "test", "embarc_applications")):
+			delete_dir_files(os.path.join(getcwd(), "test", "embarc_applications"), dir=True)
+		repo1.clone(url, path=os.path.join(getcwd(), "test", "embarc_applications"), rev=None, depth=None, protocol=None, offline=False)
+		repo1.sync()
+		repo1.write()
+
+		print(getcwd())
+		print(os.listdir(getcwd()))
+		
+		cd("test")
+		cd("embarc_applications")
+		print("path work",getcwd())
+		print("repo",repo1.revtype(repo1.rev))
+
 	def tearDown(self):
 		print("test osp")
 
 if __name__=='__main__':
 	COV = coverage.coverage(branch=True, include='tools/*')
 	COV.start()
-	testfilepath = "test.html"
+	testfilepath = "test/test.html"
 	ftp=open(testfilepath,'wb')
 	suit1 = unittest.TestLoader().loadTestsFromTestCase(TestTemplate)
 	suit2 = unittest.TestLoader().loadTestsFromTestCase(TestToolchain)
 	suit3 = unittest.TestLoader().loadTestsFromTestCase(TestBuilder)
 	suit4 = unittest.TestLoader().loadTestsFromTestCase(TestOSP)
-	suite = unittest.TestSuite([suit1, suit2, suit3])
-	runner = HTMLTestRunner.HTMLTestRunner(stream=ftp,title="test result report")
-	#unittest.TextTestRunner(verbosity=2).run(suite)
-	runner.run(suite)
+	suite = unittest.TestSuite([ suit1])# suit1, suit2,
+	# runner = HTMLTestRunner.HTMLTestRunner(stream=ftp,title="test result report")
+	unittest.TextTestRunner(verbosity=2).run(suite)
+	#runner.run(suite)
 	ftp.close()
 	COV.stop()
 	COV.save()
 	print('Coverage Summary:')
 	COV.report()
 	basedir = os.path.abspath(os.path.dirname(__file__))
-	covdir = os.path.join(basedir, 'tmp/coverage')
+	covdir = os.path.join(basedir, 'test/coverage')
 	COV.html_report(directory=covdir)
 	print('HTML version: file://%s/index.html' % covdir)
 	COV.erase()

@@ -13,6 +13,7 @@ SUPPORTED_CORES = {
     "nsim" : {"10" : ["arcem", "archs", "arcsem"]}
 
 }
+OLEVEL = ["Os", "O0", "O1", "O2", "O3"]
 GNU_PATH = ""
 MW_PATH = ""
 SUPPORT_TOOLCHAIN = ["gnu", "mw"]
