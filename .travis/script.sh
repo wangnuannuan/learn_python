@@ -13,5 +13,6 @@ die() {
     cd .travis || die
     python comment.py || die
     MSG="test send comments in bash script"
+    echo "$MSG"
     bash -c "$COMMENTS"
 }
