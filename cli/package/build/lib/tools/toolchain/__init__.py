@@ -51,7 +51,7 @@ class arcToolchain:
     def set_toolchain_env(self, tool_key, toolchain_root):
         '''set toolchian's environmental variable
         tool_key: toolchian name "mw" or "gnu"
-        toolchian_root: if current platform is windows, this is the bin path ,if current platform is Linux,this should be the root directory
+        toolchian_root: if current platform is windows, this is the bin path ,if current platform is Linux,this should be the root directory ,here input the bin path
         return False if failed
         '''
         platform = self.get_platform()
@@ -62,6 +62,7 @@ class arcToolchain:
         elif platform  == "Linux":
             file_path = os.path.dirname(os.path.abspath(__file__))
             work_path = getcwd()
+            toolchain_root = os.apth.dirname(toolchain_root)
             sh_script = os.path.join(file_path, "linux_env_set_arc.sh")
             command = ["bash", sh_path, "-t", tool_key, "-r", toolchain_root]
             try:

@@ -35,7 +35,8 @@ class Mw(arcToolchain):
             self.version = version
 
     def download(self, version=None, path=None):
-        pass
+        print("Can not download metaware using cli")
+        return
 
     def extract_file(self, pack=None, path=None):
         '''extract gnu file from pack to path;
