@@ -13,7 +13,7 @@ def comment_on_pull_request(pr_number,slug, token, comment):
 
 if __name__ == '__main__':
     print "start post"
-    PR_NUMBER = os.environ.get('TRAVIS_PULL_REQUEST')
+    PR_NUMBER = 1 #os.environ.get('TRAVIS_PULL_REQUEST')
     REPO_SLUG = os.environ.get('TRAVIS_REPO_SLUG')
     TOKEN = os.environ.get('GH_TOKEN')
     results = "test"
