@@ -14,7 +14,7 @@ env:
       --data @- << DATA\n{
       "state": "$0",
       "description": "$1",
-      "context": "travis-ci/$NAME",
+      "context": "travis-ci",
       "target_url": "https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$TRAVIS_JOB_ID"
       }\nDATA'
 
@@ -30,16 +30,12 @@ before_install:
   - git config --global user.email "${U_EMAIL}"
 
 after_success:
-  - bash -c "$STATUS" success "Local $NAME testing has passed"
+  - bash -c "$STATUS" success "Local  testing has passed"
 
 after_failure:
-  - bash -c "$STATUS" failure "Local $NAME testing has failed"
+  - bash -c "$STATUS" failure "Local  testing has failed"
 
 script:
   - bash .travis/script.sh
   
-matrix:
-  include:
-    - env: NAME="doc" TOOLCHAIN="sphinx" OSP_ROOT="none" GNU_VER="none"
-      os: linux
-      compiler: gcc
+
