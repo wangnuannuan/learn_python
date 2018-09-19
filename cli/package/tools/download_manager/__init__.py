@@ -8,6 +8,7 @@ import sys
 from shutil import copyfile
 import shutil
 import zipfile, tarfile
+import yaml
 cwd_root = ""
 _cwd = os.getcwd()
 
@@ -23,11 +24,11 @@ def cd(newdir):
     prevdir = getcwd()
     os.chdir(newdir)
     _cwd = newdir
-    try:
+    '''try:
         yield
     finally:
         os.chdir(prevdir)
-        _cwd = prevdir
+        _cwd = prevdir'''
 
 def relpath(root, path):
     '''return the relative path of root and path'''
@@ -66,6 +67,38 @@ def delete_dir_files(directory, dir=False):
                     remove(to_remove)
         else:
             shutil.rmtree(directory)
+
+
+def generate_yaml(filename,data):
+    file = os.path.join(os.getcwd(), filename)
+    if os.path.isfile(file):
+        os.remove(file)
+    try:
+        with open(file, 'w+') as f:
+            f.write(yaml.dump(data, default_flow_style=False))
+        f.close()
+    except:
+        print("Unable to open %s for writing!" % file)
+        return -1
+    print("Wrote to file %s" % file)
+
+    return 0
+
+
+def edit_yaml(filename,data):
+    file = os.path.join(os.getcwd(), filename)
+    if not os.path.isfile(file):
+        generate_yaml(filename,data)
+        return
+    else:
+        try:
+            with open(file, 'w+') as f:
+                f.write(yaml.dump(data, default_flow_style=False))
+        except:
+            print("Unable to open %s for writing!" % file)
+            return -1
+        print("Wrote to file %s" % file)
+        return 0
 
 def copy_file(src, dst):
     """ Implement the behaviour of "shutil.copy(src, dst)" without copying the

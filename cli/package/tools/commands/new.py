@@ -46,7 +46,7 @@ def build_config():
 
     print("Support boards {} ".format(SUPPORTED_BOARDS))
     while True:
-        board = raw_input("Chose BOARD:")
+        board = raw_input("Choose BOARD:")
         if board not in SUPPORTED_BOARDS:
             continue
         else:
@@ -55,7 +55,7 @@ def build_config():
     support_bd_ver = BOARD_VERSION[board]
     print("Support board version {} ".format(support_bd_ver))
     while True:
-        bd_ver = raw_input("Chose BOARD VERSION:")
+        bd_ver = raw_input("Choose BOARD VERSION:")
         if bd_ver not in support_bd_ver:
             continue
         else:
@@ -65,7 +65,7 @@ def build_config():
     support_core = SUPPORTED_CORES[board][bd_ver]
     print("Support cores {} ".format(support_core))
     while True:
-        cur_core = raw_input("Chose CORE:")
+        cur_core = raw_input("Choose CORE:")
         if cur_core not in support_core:
             continue
         else:
@@ -74,7 +74,7 @@ def build_config():
     support_olevel = OLEVEL
     print("Support olevel {}".format(support_olevel))
     while True:
-        olevel = raw_input("Chose OLEVEL:")
+        olevel = raw_input("Choose OLEVEL:")
         if olevel not in support_olevel:
             continue
         else:

@@ -1,0 +1,35 @@
+common:
+  path:
+    - example/baremetal/arc_feature/cache
+  board:
+    emsk:
+      -11
+  cores:
+    arcem4:
+      - ARC EM4 Configuration
+    arcem6:
+      - ARC EM6 Configuration
+    arcem6gp:
+      - ARC EM6 GP Configuration
+  toolchain:
+    - gnu
+
+olevel:
+  arcem4:
+    - Os
+    - O0
+    - O1
+    - O2
+    - O3
+  arcem6:
+    - Os
+    - O0
+    - O1
+    - O2
+    - O3
+  arcem6gp:
+    - Os
+    - O0
+    - O1
+    - O2
+    - O3

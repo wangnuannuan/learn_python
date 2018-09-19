@@ -1,0 +1,16 @@
+board_specific:
+  emsk:
+    11:
+      arcem4:
+        - ARC EM4 Configuration
+      arcem6:
+        - ARC EM6 Configuration
+      arcem6gp:
+        - ARC EM6 GP Configuration
+    22:
+      arcem7d:
+        - ARC EM7D Configuration
+      arcem9d:
+        - ARC EM9D Configuration
+      arcem11d:
+        - ARC EM11D Configuration

@@ -58,11 +58,12 @@ class Win32Environment:
         # Note: for 'system' scope, you must run this as Administrator
         key = winreg.OpenKey(self.root, self.subkey, 0, winreg.KEY_ALL_ACCESS)
         value, _ = winreg.QueryValueEx(key, name)
-        print("zhucebiao",value)
         return value
 
 
 def set_env_path(env_obj, env_name, env_path,refresh=False):
+    print(env_name)
+    print(env_path)
     need_add = False
     path_values = None
     exist_path = None
@@ -73,6 +74,7 @@ def set_env_path(env_obj, env_name, env_path,refresh=False):
 
     if refresh:
         exist_path=None
+    print(exist_path)
     if exist_path:
         path_values = [i for i in exist_path.split(';')]# path in registry
         for i in env_path.split(';'):

@@ -1,0 +1,10 @@
+core_specific:
+  arcem4:
+    config:
+      - ARC EM4 Configuration
+  arcem6:
+    config:
+      - ARC EM6 Configuration
+  arcem6gp:
+    config:
+      - ARC EM6 GP Configuration

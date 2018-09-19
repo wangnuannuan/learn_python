@@ -55,3 +55,12 @@ path1 =os.path.join(os.getcwd(),"arc_gnu_2018.03_prebuilt_elf32_le_linux_install
 #gnu = gnu.Gnu()
 #gnu.extract_file(path)
 untar(path,os.getcwd())'''
+'''from tools.toolchain import arcToolchain
+toolchain=arcToolchain()
+toolchain.set_toolchain_env("gnu",".")'''
+repo = repo.Repo.fromurl("https://github.com/foss-for-synopsys-dwc-arc-processors/embarc_osp")
+print repo.name
+print repo.url
+print repo.rev
+print repo.path
+#path = repo.Repo.pathtype()

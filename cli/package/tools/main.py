@@ -2,13 +2,14 @@ from __future__ import print_function, absolute_import
 import argparse
 import os
 import pkg_resources
-from tools.commands import new, showconfig, build, show
+from tools.commands import new, showconfig, build, show, toolchain, osp
 subcommands = {
     "new": new,
     "appconfig":showconfig,
     "build": build,
     "list": show,
-    "toolchain": toolchian,
+    "toolchain": toolchain,
+    "osp": osp,
 }
 
 def main():

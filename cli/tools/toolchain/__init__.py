@@ -57,7 +57,7 @@ class arcToolchain:
         platform = self.get_platform()
         if platform  == "Windows":
             env_obj = windows_env_set_arc.Win32Environment(scope="user")
-            windows_env_set_arc.set_env_path(env_obj,'path', toolchain_root)
+            windows_env_set_arc.set_env_path(env_obj,'Path', toolchain_root)
             return True
         elif platform  == "Linux":
             file_path = os.path.dirname(os.path.abspath(__file__))
