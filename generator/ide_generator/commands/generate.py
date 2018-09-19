@@ -13,4 +13,4 @@ def setup(subparser):
         "-p", "--project", help="Project to be generated", default = '')
     subparser.add_argument(
         "-t", "--toolchain", help="Create project files for provided toolchain")
-       
+

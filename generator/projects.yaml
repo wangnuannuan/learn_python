@@ -1,16 +1,6 @@
 modules:
   osp: &modules_osp
-    common:
-      sources:
-        - arc
-        - board
-        - device
-        - inc
-        - middleware
-        - library
-        - options
-        - os
-    
+  - records/osp/common.yaml    
 projects:
   baremetal_arc_feature_cache:
     - *modules_osp
