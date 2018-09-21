@@ -1,6 +1,9 @@
 import yaml
 from functools import reduce
 import operator
+import subprocess
+import errno
+from os import getcwd
 def uniqify(_list):
     return reduce(lambda r, v: v in r[1] and r or (r[0].append(v) or r[1].add(v)) or r, _list, ([], set()))[0]
 
@@ -34,3 +37,42 @@ def merge_recursive(*args):
         return output
     else:
         return reduce(operator.add, args)
+
+def pquery(command, output_callback=None, stdin=None, **kwargs):
+    proc = None
+    try:
+        proc = subprocess.Popen(command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
+    except OSError as e:
+        print(e)
+        if e.args[0] == errno.ENOENT:
+            print(
+                "Could not execute \"%s\".\n"
+                "Please verify that it's installed and accessible from your current path by executing \"%s\".\n" % (command[0], command[0]), e.args[0])
+        else:
+            raise e
+    if proc is None:
+        print(
+                "Could not execute \"%s\".\n"
+                "Please verify that it's installed and accessible from your current path by executing \"%s\".\n" % (command[0], command[0]), e.args[0])
+        return None
+
+    if output_callback:
+        line = ""
+        while 1:
+            s = str(proc.stderr.read(1))
+            line += s
+            if s == '\r' or s == '\n':
+                output_callback(line, s)
+                line = ""
+
+            if proc.returncode is None:
+                proc.poll()
+            else:
+                break
+
+    stdout, _ = proc.communicate(stdin)
+
+    if proc.returncode != 0:
+        raise ProcessException(proc.returncode, command[0], ' '.join(command), getcwd())
+
+    return stdout.decode("utf-8")

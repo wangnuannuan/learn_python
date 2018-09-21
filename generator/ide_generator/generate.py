@@ -26,4 +26,4 @@ class Generator:
                 if name in self.projects_dict['projects'].keys():
                     found = True
                     records = self.projects_dict['projects'][name]
-                    Ide(name, load_yaml_records(uniqify(flatten(records))))
+                    yield Ide(name, load_yaml_records(uniqify(flatten(records))))
