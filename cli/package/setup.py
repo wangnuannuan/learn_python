@@ -1,7 +1,12 @@
 import os
 
 from setuptools import setup, find_packages
-
+path = os.path.join(os.path.expanduser("~"), '.embarc_cli')
+if not os.path.exists(path):
+    try:
+        os.mkdir(path)
+    except (IOError, OSError):
+        pass
 setup(
     name='embarc_cli',
     version='0.0.1',

@@ -23,3 +23,8 @@ CURRENT_PLATFORM = platform.system()
 MakefileNames = ['Makefile', 'makefile', 'GNUMakefile']
 MIDDLEWARE = ["aws", "coap", "common", "fatfs", "http_parser", "ihex", "lwip-contrib", "Lwip", "mbedtls", "mqtt", "ntshell", "openthread", "parson", "u8glib", "wakaama"]
 LIBRARIES = ["clib","secureshield"]
+CORES = {
+	"arcem4": {"description":"ARC EM4 Configuration"},
+	"arcem6": {"description":"ARC EM6 Configuration"},
+	"arcem6": {"description":"ARC EM6 Configuration"},
+}
