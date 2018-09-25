@@ -1,0 +1,4 @@
+[console_scripts]
+embarc = tools.main:main
+embarc_tools = tools.main:main
+
