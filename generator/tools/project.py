@@ -14,14 +14,13 @@ class Ide:
         if path:
             self.ide["common"]["path"] = path
         else:
-            self.ide["common"]["path"] = os.getcwd()
+            self.ide["common"]["path"] = os.getcwd().replace("\\", "/")
         os.chdir(self.ide["common"]["path"])
     def _get_project_file_template(self, name="Default"):
         project_template = {
             "name": name,
             "path":"",
             "folder": "",
-            "workspace_depth": 3,
             "root": "",
             "outdir": "${ProjDirPath}",
         }
@@ -30,17 +29,13 @@ class Ide:
     def _get_cproject_template(self):
 
         cproject_template = {
-            "cores": {}, #//duqu
+            "core": {}, #//duqu
             "includes": [],
             "defines": [],
             "build": "",
             "clean": "",
             "toolchain": "",
         }
-        cproject_template["cores"] = CORES
-        for core, settings in cproject_template["cores"].items():
-            core_id = random.randint(1000000000, 2000000000)
-            cproject_template["cores"][core]["id"] = core_id
         return cproject_template
 
     def _get_build_template(self):
@@ -49,7 +44,9 @@ class Ide:
             "BD_VER": "",
             "CUR_CORE": "",
             "TOOLCHAIN": "",
-            "APPL": ""
+            "APPL": "",
+            "OUT_DIR_ROOT": "${ProjDirPath}"
+
         }
         return build_template
 
@@ -84,8 +81,8 @@ class Ide:
                     relative_root = (line.split("=")[1]).strip()
                     
                     osp_root = os.path.normpath(os.path.join(os.getcwd(), relative_root))
-                    self.ide["common"]["root"] = osp_root
-                    self.ide["common"]["folder"] = os.path.relpath(os.getcwd(), osp_root)
+                    self.ide["common"]["root"] = osp_root.replace("\\", "/")
+                    self.ide["common"]["folder"] = os.path.relpath(os.getcwd(), osp_root).replace("\\", "/")
 
         return build_template
 
@@ -130,7 +127,7 @@ class Ide:
                 if comp_opt.startswith("-I") == True:
                     inc_path = comp_opt.replace("-I", "", 1)
                     inc_path = os.path.normpath(os.path.join(os.getcwd(), inc_path))
-                    print(os.path.relpath(inc_path, relative_root))
+
                     includes.append(os.path.relpath(inc_path, relative_root))
                 if comp_opt.startswith("-D") == True:
                     define = comp_opt.replace("-D", "", 1)
@@ -142,15 +139,24 @@ class Ide:
 
         build_template = self. _get_makefile_config(build_template)
 
+        cur_core = build_template["CUR_CORE"]
+
+        for core, settings in CORES.items():
+            if cur_core == core:
+                cproject_template["core"] = {core: settings}
+
+        for core, settings in cproject_template["core"].items():
+            core_id = random.randint(1000000000, 2000000000)
+            cproject_template["core"][core]["id"] = core_id
+
         for path in includes:
             include = os.path.join(self.ide['common']["name"], self.ide['common']['osp_root'], path)
             if path == self.ide['common']["folder"]:
                 include = path
-            print(os.path.normpath(include))
             cproject_template["includes"].append(include)
         build_opt_list = ["%s=%s" % (key.upper(), value) for (key, value) in build_template.items()]
-        cproject_template["build"] = "make " + " ".join(build_opt_list) + "all"
-        cproject_template["clean"] = "make " + " ".join(build_opt_list) + "clean"
+        cproject_template["build"] = " ".join(build_opt_list) + " all"
+        cproject_template["clean"] = " ".join(build_opt_list) + " clean"
         self.ide["toolchain"] = build_template["TOOLCHAIN"]
 
         return cproject_template
@@ -199,7 +205,7 @@ class Ide:
         self.get_asm_c_include()
 
         if "path" in self.ide["common"]:
-            app_path = self.ide["common"]["folder"].replace("\\", "/")
+            app_path = self.ide["common"]["folder"] #.replace("\\", "/")
             path_depth = len(app_path.split("/"))
             path_list = [app_path.rsplit("/", i)[0] for i in range(path_depth, 0, -1)]
             
@@ -207,5 +213,4 @@ class Ide:
 
         exporter = Exporter("gnu")
         exporter.gen_file_jinja("project.tmpl", self.ide["common"], ".project", outdir)
-
         exporter.gen_file_jinja(".cproject.tmpl", self.ide["exporter"], ".cproject", outdir)

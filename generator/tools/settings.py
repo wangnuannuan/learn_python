@@ -1,5 +1,6 @@
 import platform
 
+OSP_DIRS = ["arc", "board", "device", "inc", "library", "middleware"]
 SUPPORTED_BOARDS = ["emsk", "axs", "hsdk", "nsim"]
 
 BOARD_VERSION = {"emsk": ["11", "22" ,"23"], "axs": ["103"], "hsdk": ["10"], "nsim": ["10"]}
@@ -26,5 +27,8 @@ LIBRARIES = ["clib","secureshield"]
 CORES = {
 	"arcem4": {"description":"ARC EM4 Configuration"},
 	"arcem6": {"description":"ARC EM6 Configuration"},
-	"arcem6": {"description":"ARC EM6 Configuration"},
+	"arcem6gp": {"description":"ARC EM6 GP Configuration"},
+	"arcem7d": {"description":"ARC EM7D Configuration"},
+	"arcem9d": {"description":"ARC EM9D Configuration"},
+	"arcem11d": {"description":"ARC EM11D Configuration"},
 }

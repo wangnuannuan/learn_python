@@ -38,8 +38,6 @@ def setup(subparser):
     subparser.add_argument(
         "--list", action="store_true", help="List osp path")
     subparser.add_argument(
-        "--set", action="store_true", help="Set osp path")
-    subparser.add_argument(
         "--url", help="OSP git url")
     subparser.add_argument(
         "--zip", help="OSP zip path")
@@ -94,3 +92,18 @@ class OSP(object):
 
         except IOError:
             raise IOError("Can not open file %s ." % fl)
+
+    def is_osp(self, path):
+        if os.path.exists(path) and os.path.isdir(path):
+            for files in OSP_DIRS:
+                files_path = os.path.join(path, files)
+                if os.path.exists(files_path) and os.path.isdir(files_path):
+                    pass
+                else:
+                    return False
+            return True
+        else:
+            return False
+
+
+

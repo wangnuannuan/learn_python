@@ -12,7 +12,7 @@ def run(args):
 	if args.generate:
 		generator = Generator()
 		for project in generator.generate():#"baremetal_arc_feature_cache"
-		    project.generate("test")
+		    project.generate("arc_feature_cache")
 
 
     
