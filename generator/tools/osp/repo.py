@@ -174,6 +174,7 @@ class Repo(object):
     def __wrap_scm(self, method):
         def __scm_call(*args, **kwargs):
             if self.scm and hasattr(self.scm, method) and callable(getattr(self.scm, method)):
+                print(self.path)
                 with cd(self.path):
                     return getattr(self.scm, method)(*args, **kwargs)
         return __scm_call
@@ -199,11 +200,9 @@ class Repo(object):
     def clone(self, url, path, rev=None, depth=None, protocol=None, offline=False, **kwargs):
         # Sorted so repositories that match urls are attempted first
         for scm in scms.values():
-            print(scm.name)
+
             main = True
             cache = self.get_cache(url, scm.name)
-            print(url)
-
             # Try to clone with cache ref first
             if cache and not os.path.isdir(path):
                 print("Found matching cached repository in \"%s\"" % cache)

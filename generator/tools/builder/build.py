@@ -33,7 +33,6 @@ class embARC_Builder:
                     option = str(opt) + '=' + self.buildopts[opt] + ' '
                     make_options += option
         self.make_options = make_options
-        print(self.make_options)
         pass
 
     @staticmethod
@@ -119,7 +118,10 @@ class embARC_Builder:
         time_pre = time.time()
         build_status['build_cmd'] = build_cmd
         build_status['build_msg'] = ''
-        build_proc = subprocess.Popen(build_cmd, shell=True, cwd=str(app_realpath), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        build_proc = subprocess.Popen(build_cmd, shell=True, cwd=str(app_realpath), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
+
+        for line in iter(build_proc.stdout.readline, b''):
+            print(line, end='')
         try:
             (build_out, build_err) = build_proc.communicate()
             return_code = build_proc.poll()

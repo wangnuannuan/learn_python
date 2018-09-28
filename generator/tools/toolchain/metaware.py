@@ -1,7 +1,7 @@
 from __future__ import print_function, division, absolute_import
 from tools.toolchain import arcToolchain
 from distutils.spawn import find_executable
-from tools.cmd import pquery
+from tools.utils import pquery
 import re
 import os
 from .. download_manager import (download_file, extract_file, getcwd, mkdir,delete_dir_files)

@@ -2,15 +2,14 @@ from __future__ import print_function, division, absolute_import
 
 import re
 import sys
-from os import getcwd
-from os.path import basename
 from prettytable import PrettyTable
 
 COLOR = False
 CLI_COLOR_MAP = {
-    "info": "default"
+    "info": "white",
     "warning": "yellow",
-    "error"  : "red"
+    "error"  : "red",
+    "highlight": "cyan"
 }
 
 class TerminalNotifier():
@@ -64,11 +63,11 @@ class TerminalNotifier():
             event["format"] = "string"
             self.print_string(event)
 
-    def print_string(self,event):
+    def print_string(self, event):
         if sys.stdout.isatty() and event.get("type", None) in CLI_COLOR_MAP:
             sys.stdout.write(self.colorstring_to_escapecode(
                 CLI_COLOR_MAP[event["type"]]))
-            print(event["message"])
+            print("[embarc] %s\n" % event["message"], end="")
             sys.stdout.write(self.colorstring_to_escapecode('default'))
 
     def print_table(self, event):
@@ -80,9 +79,10 @@ class TerminalNotifier():
                     sys.stdout.write(self.colorstring_to_escapecode(
                         CLI_COLOR_MAP[event["type"]]))
                     pretty_table = PrettyTable(table_head)
+                    pretty_table.align = "l"
                     for content in table_content:
                         if len(content) > 0:
-                            pretty_table.add_row(result)
+                            pretty_table.add_row(content)
                     print(pretty_table)
                     sys.stdout.write(self.colorstring_to_escapecode('default'))
         else:
@@ -91,8 +91,9 @@ class TerminalNotifier():
             event["message"] = msg
             event["type"] = "warning"
             event["format"] = "string"
-            self.print_string(event)    
+            self.print_string(event)
 
+    COLOR_MATCHER = re.compile(r"(\w+)(\W+on\W+\w+)?")
     def colorstring_to_escapecode(self, color_string):
         match = re.match(self.COLOR_MATCHER, color_string)
         if match:

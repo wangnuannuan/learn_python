@@ -4,18 +4,26 @@ import os
 import random
 from tools.settings import *
 import logging
+from tools.notify import TerminalNotifier
+
 logger = logging.getLogger("ide.project")
+
 class Ide:
     def __init__(self, path=None):
         #self.name = name
         self.ide = {}
         self.ide["common"] = {}
         self.ide["common"] = self._get_project_file_template()
+        self.notifier = TerminalNotifier()
         if path:
             self.ide["common"]["path"] = path
         else:
             self.ide["common"]["path"] = os.getcwd().replace("\\", "/")
         os.chdir(self.ide["common"]["path"])
+        self.notifier.event["format"] = "string"
+        self.notifier.event["type"] = "info"
+        self.notifier.event["message"] = "Start to generate ide "
+        self.notifier.notify(self.notifier.event)
     def _get_project_file_template(self, name="Default"):
         project_template = {
             "name": name,
@@ -45,17 +53,19 @@ class Ide:
             "CUR_CORE": "",
             "TOOLCHAIN": "",
             "APPL": "",
-            "OUT_DIR_ROOT": "${ProjDirPath}"
+            
 
         }
         return build_template
 
     def _get_makefile_config(self, build_template=None):
-        makefile = None      
+        self.notifier.event["message"] = "Read makefile and get configuration "
+        self.notifier.notify(self.notifier.event)
+        makefile = None
         for file in MakefileNames:
             if os.path.exists(file) and os.path.isfile(file):
                 makefile = file
-                
+
         if not makefile:
             logger.error("makefile doesn't exist")
             return None
@@ -64,7 +74,7 @@ class Ide:
             for line in lines:
                 if line.startswith("APPL "):
                     build_template["APPL"] = (line.split("=")[1]).strip()
-                    self.ide['common']["name"] = build_template["APPL"]
+
                 if line.startswith("BOARD"):
                     build_template["BOARD"] = (line.split("=")[1]).strip()
                 if line.startswith("BD_VER"):
@@ -79,10 +89,10 @@ class Ide:
                         build_template["TOOLCHAIN"] = "gnu"
                 if line.startswith("EMBARC_ROOT"):
                     relative_root = (line.split("=")[1]).strip()
-                    
+
                     osp_root = os.path.normpath(os.path.join(os.getcwd(), relative_root))
                     self.ide["common"]["root"] = osp_root.replace("\\", "/")
-                    self.ide["common"]["folder"] = os.path.relpath(os.getcwd(), osp_root).replace("\\", "/")
+                    self.ide["common"]["folder"] = os.path.relpath(os.getcwd(), osp_root).replace("\\", "/").strip("../")
 
         return build_template
 
@@ -105,7 +115,6 @@ class Ide:
             for opt_line in opt_lines:
                 if opt_line.startswith("APPL"):
                     build_template["APPL"] = (opt_line.split(":")[1]).strip()
-                    self.ide['common']["name"] = build_template["APPL"]
                 if opt_line.startswith("BOARD"):
                     build_template["BOARD"] = (opt_line.split(":")[1]).strip()
                 if opt_line.startswith("BD_VER"):
@@ -121,7 +130,8 @@ class Ide:
                 if  opt_line.startswith("COMPILE_OPT") == True:
                     compile_opt_line = opt_line.split(":")[1]
                     compile_opts = compile_opt_line.split()
-
+        self.notifier.event["message"] = "Get inculdes and defines "
+        self.notifier.notify(self.notifier.event)
         if compile_opts != "" and relative_root != "":
             for comp_opt in compile_opts:
                 if comp_opt.startswith("-I") == True:
@@ -138,8 +148,22 @@ class Ide:
                     cproject_template["defines"].append(define)
 
         build_template = self. _get_makefile_config(build_template)
+        self.notifier.event["message"] = "Current configuration "
+        self.notifier.notify(self.notifier.event)
+        self.notifier.event["format"] = "table"
+        table_head = list()
+        table_content = list()
+        for key, value in build_template.items():
+            table_head.append(key)
+            table_content.append(value)
+        self.notifier.event["message"] = [table_head, [table_content]]
+        self.notifier.notify(self.notifier.event)
+        build_template["OUT_DIR_ROOT"] = "${ProjDirPath}"
+
+
 
         cur_core = build_template["CUR_CORE"]
+        self.ide["common"]["name"] = build_template["APPL"] + "_ide"
 
         for core, settings in CORES.items():
             if cur_core == core:
@@ -201,16 +225,22 @@ class Ide:
         self.ide["exporter"] = self._get_project_conf_template()
         self.ide["exporter"].update(self.ide["common"])
 
-    def generate(self, outdir):
-        self.get_asm_c_include()
+    def generate(self):
 
+        self.get_asm_c_include()
+        outdir = "."
         if "path" in self.ide["common"]:
-            app_path = self.ide["common"]["folder"] #.replace("\\", "/")
+            app_path = self.ide["common"]["folder"]
             path_depth = len(app_path.split("/"))
             path_list = [app_path.rsplit("/", i)[0] for i in range(path_depth, 0, -1)]
-            
+
             self.ide["common"]["path_list"] = uniqify(path_list)
 
-        exporter = Exporter("gnu")
+        exporter = Exporter("toolchain")
+        self.notifier.event["format"] = "string"
+        self.notifier.event["message"] = "Start to generate ide files .project and .cproject accroding to templates"
+        self.notifier.notify(self.notifier.event)
         exporter.gen_file_jinja("project.tmpl", self.ide["common"], ".project", outdir)
         exporter.gen_file_jinja(".cproject.tmpl", self.ide["exporter"], ".cproject", outdir)
+        self.notifier.event["message"] = "Finish generate ide files and they are in " + os.path.abspath(outdir)
+        self.notifier.notify(self.notifier.event)

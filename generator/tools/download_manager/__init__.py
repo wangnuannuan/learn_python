@@ -24,11 +24,11 @@ def cd(newdir):
     prevdir = getcwd()
     os.chdir(newdir)
     _cwd = newdir
-    '''try:
+    try:
         yield
     finally:
         os.chdir(prevdir)
-        _cwd = prevdir'''
+        _cwd = prevdir
 
 def relpath(root, path):
     '''return the relative path of root and path'''

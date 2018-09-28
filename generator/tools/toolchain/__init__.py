@@ -3,7 +3,7 @@ from tools.settings import GNU_PATH, MW_PATH, SUPPORT_TOOLCHAIN, CURRENT_PLATFOR
 from distutils.spawn import find_executable
 import os
 from tools.toolchain import windows_env_set_arc
-from tools.cmd import popen
+from tools.utils import popen
 from .. download_manager import getcwd, delete_dir_files
 
 TOOLCHAIN_PATHS = {

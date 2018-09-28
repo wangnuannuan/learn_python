@@ -1,10 +1,12 @@
 from __future__ import print_function, division, absolute_import
 from tools.download_manager import getcwd, cd
 from tools.settings import *
-from tools.cmd import pquery, popen
+from tools.utils import pquery, popen
 import os
-help = "Show application config"
+from tools.notify import TerminalNotifier
 
+help = "Show application config"
+notifier = TerminalNotifier()
 def run(args):
     root = getcwd()
     app_path = None
@@ -16,14 +18,33 @@ def run(args):
     makefile = get_makefile(app_path)
 
     if makefile:
-        cd(app_path)
-        try:
-            exe = pquery(["make", "opt"])
-            if exe:
-                print(exe)
-        except Exception as e:
-            print(e)
-        cd(root)
+        with cd(app_path):
+            try:
+                exe = pquery(["make", "opt"])
+                if exe:
+
+                    opt_lines = exe.splitlines()
+
+                    table_head = [" ", opt_lines[0].strip("=")]
+                    table_content = list()
+                    for opt_line in opt_lines:
+                        table_line = opt_line.split(":", 1)
+                        if len(table_line) > 1:
+                            if table_line[0].strip() in ["COMPILE_OPT","ASM_OPT","LINK_OPT", "DBG_HW_FLAGS", "CXX_COMPILE_OPT"]:
+                                table_line_list = table_line[1].split(" ")
+                                for i in range(len(table_line_list)):
+                                    table_line_list[i] = table_line_list[i].replace("-I", "include: ")
+                                    table_line_list[i] = table_line_list[i].replace("-D", "defines: ")
+                                table_line_list_str = "\n".join(table_line_list)
+                                table_line[1] = table_line_list_str
+                                table_line = [table_line[0], table_line[1]]
+                            table_content.append(table_line)
+
+                    notifier.event["format"] = "table"
+                    notifier.event["message"] = [table_head, table_content]
+                    notifier.notify(notifier.event)
+            except Exception as e:
+                print(e)
 
 def get_makefile(app_path):
     for makefile in MakefileNames:

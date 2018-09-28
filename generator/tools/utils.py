@@ -1,9 +1,12 @@
+from __future__ import print_function, absolute_import
+
+from tools.download_manager import getcwd
 import yaml
 from functools import reduce
 import operator
 import subprocess
 import errno
-from os import getcwd
+
 def uniqify(_list):
     return reduce(lambda r, v: v in r[1] and r or (r[0].append(v) or r[1].add(v)) or r, _list, ([], set()))[0]
 
@@ -37,6 +40,26 @@ def merge_recursive(*args):
         return output
     else:
         return reduce(operator.add, args)
+
+class ProcessException(Exception):
+    pass
+
+def popen(command, stdin=None, **kwargs):
+    # print for debugging
+
+    proc = None
+    try:
+        proc = subprocess.Popen(command, **kwargs)
+    except OSError as e:
+        if e.args[0] == errno.ENOENT:
+            print(
+                "Could not execute \"%s\".\n"
+                "Please verify that it's installed and accessible from your current path by executing \"%s\".\n" % (command[0], command[0]), e.args[0])
+        else:
+            raise e
+
+    if proc and proc.wait() != 0:
+        raise ProcessException(proc.returncode, command[0], ' '.join(command), getcwd())
 
 def pquery(command, output_callback=None, stdin=None, **kwargs):
     proc = None

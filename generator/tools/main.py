@@ -10,7 +10,7 @@ subcommands = {
     "list": show,
     "toolchain": toolchain,
     "osp": osp,
-    "generate": ide,
+    "ide": ide,
 }
 
 def main():
