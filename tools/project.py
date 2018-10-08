@@ -130,17 +130,15 @@ class Ide:
                 if  opt_line.startswith("COMPILE_OPT") == True:
                     compile_opt_line = opt_line.split(":", 1)[1]
                     compile_opts = compile_opt_line.split()
-                    print(compile_opts)
         self.notifier.event["message"] = "Get inculdes and defines "
         self.notifier.notify(self.notifier.event)
         if compile_opts != "" and relative_root != "":
             for comp_opt in compile_opts:
                 if comp_opt.startswith("-I") == True:
-                    inc_path = comp_opt.replace("-I", "", 1) 
+                    inc_path = comp_opt.replace("-I", "", 1)
                     if inc_path.startswith(relative_root):
                         inc_path = os.path.relpath(inc_path, relative_root)
                     inc_path = inc_path.replace("\\","/")
-                    print(inc_path)
 
                     includes.append(inc_path)
                 if comp_opt.startswith("-D") == True:
@@ -180,43 +178,33 @@ class Ide:
 
         for path in includes:
             include = os.path.join(self.ide['common']["name"], path)
-            
+
             if path == ".":
-                include = ""
+                include = self.ide["common"]["name"]
+
             include = include.replace("\\", "/")
             cproject_template["includes"].append(include)
-        build_opt_list = ["%s=%s" % (key.upper(), value) for (key, value) in build_template.items()]
+        # build_opt_list = ["%s=%s" % (key.upper(), value) for (key, value) in build_template.items()]
         # cproject_template["build"] = " ".join(build_opt_list) + " all"
         # cproject_template["clean"] = " ".join(build_opt_list) + " clean"
         self.ide["toolchain"] = build_template["TOOLCHAIN"]
-        self.ide["common"]["links"] = includes
+        self.ide["common"]["links"] = list()
         links_dict = dict()
-        for path in self.ide["common"]["links"]:
+        for path in includes:
             if path != "." and "embARC_generated" not in path:
-                if "/" not in path:
-                    links_dict[path] = [path]
+                if not path.startswith("board"):
+                    self.ide["common"]["links"].append(path)
                 else:
-                    path_depth = len(path.split("/"))
-                    path_list = [path.rsplit("/", i)[0] for i in range(path_depth, 0, -1)]
-                    path_list = uniqify(path_list)
-                    if path_list[0] not in links_dict:
-                        links_dict[path_list[0]] = path_list
-                    else:
-                        links_dict[path_list[0]].extend(path_list)
-                        links_dict[path_list[0]] = uniqify(links_dict[path_list[0]])
-        print(links_dict)
-        links_dict_sort = dict()
+                    if "/" in path:
+                        self.ide["common"]["links"].append(path)
 
-        
-        for key ,value in links_dict.items():
-            length = len(value) - 1
-            links_dict_sort[value[length]] = list()
-            for i in range(length):
-                links_dict_sort[value[length]].append(value[i])
-        self.ide["common"]["links"] = links_dict_sort
-        print(self.ide["common"]["links"])
-
-
+        virtual_folders = list()
+        for link in self.ide["common"]["links"]:
+            if "/" in link:
+                link_depth = len(link.split("/"))
+                link_list = [link.rsplit("/", i)[0] for i in range(link_depth, 0, -1)]
+                virtual_folders.extend(link_list)
+        self.ide["common"]["virtual_folders"] = uniqify(virtual_folders)
 
         return cproject_template
 
@@ -267,20 +255,15 @@ class Ide:
         if "path" in self.ide["common"]:
             app_path = self.ide["common"]["folder"]
             path_depth = len(app_path.split("/"))
-            #path_list = [app_path.rsplit("/", i)[0] for i in range(path_depth, 0, -1)]
 
-            # self.ide["common"]["path_list"] = uniqify(path_list)
-        print(self.ide["exporter"])
-        
 
-        exporter = Exporter("toolchain")
+        exporter = Exporter(self.ide["toolchain"])
         self.notifier.event["format"] = "string"
         self.notifier.event["message"] = "Start to generate ide files .project and .cproject accroding to templates"
         self.notifier.notify(self.notifier.event)
         exporter.gen_file_jinja("project.tmpl", self.ide["common"], ".project", outdir)
-        '''
         exporter.gen_file_jinja(".cproject.tmpl", self.ide["exporter"], ".cproject", outdir)
         self.notifier.event["message"] = "Finish generate ide files and they are in " + os.path.abspath(outdir)
         self.notifier.notify(self.notifier.event)
         self.notifier.event["message"] = "Open ide - >File >Open Projects from File System >Paste " + os.path.abspath(outdir)
-        self.notifier.notify(self.notifier.event)'''
+        self.notifier.notify(self.notifier.event)

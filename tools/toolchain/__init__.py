@@ -16,7 +16,7 @@ class ProcessException(Exception):
     pass
 
 class arcToolchain:
-    
+
 
     def check_executable(self, tool_key, executable_name):
         '''tool_key: toolchain name

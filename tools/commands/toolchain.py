@@ -40,7 +40,7 @@ def run(args):
             notifier.event["message"] = "start setting environmental variable"
             notifier.notify(notifier.event)
             notifier.event["message"] = "(%s) is download in (%s)" % (args.toolchain, bin_path)
-            notifier.notify(notifier.event)           
+            notifier.notify(notifier.event)
 
 def setup(subparser):
     subparser.add_argument(

@@ -37,6 +37,7 @@ class embARC_Builder:
                     option = str(opt) + '=' + self.buildopts[opt] + ' '
                     make_options += option
         self.make_options = make_options
+
         pass
 
     @staticmethod

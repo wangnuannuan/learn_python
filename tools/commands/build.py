@@ -23,66 +23,64 @@ def run(args):
         app_path = args.path
     if args.osp:
         osproot = args.osp
+    if args.board:
+        buildopts["BOARD"] = args.board
+    if args.bd_ver:
+        buildopts["BD_VER"] = args.bd_ver
+    if args.core:
+        buildopts["CUR_CORE"] = args.core
+    if args.toolchain:
+        buildopts["TOOLCHAIN"] = args.toolchain
+
+    builder = build.embARC_Builder(args.osp, buildopts, curdir)
+
     if args.make:
         make_config = get_config(args.make)
-        target = None
-        target_list = ["elf", "bin","hex", "size"]
+        current_options = builder.buildopts
+        make_options = dict()
+        make_config_update = list()
+
         for config in make_config:
-            for tar in target_list:
-                if "=" not in config:
-                    if config == tar:
-                        target = tar
-        if target:
-            make_config.pop(target)
+            key = config.split("=")
+
+            make_options[key[0]] = key[1]
+        current_options.update(make_options)
+
+        for key, value in current_options.items():
+            option = "%s=%s" % (key, value)
+            make_config_update.append(option)
+        builder.make_options = " ".join(make_config_update)
+
+    if args.target:
+        #information = builder.get_build_info(app_path)
+        if args.target == "elf":
+            build_status = builder.build_elf(app_path, parallel=parallel, pre_clean=False, post_clean=False)
+        elif args.target == "bin":
+            build_status = builder.build_bin(app_path, parallel=parallel, pre_clean=False, post_clean=False)
+        elif args.target == "hex":
+            build_status = builder.build_hex(app_path, parallel=parallel, pre_clean=False, post_clean=False)
+        elif args.target == "clean":
+            build_status = builder.clean(app_path)
+        elif args.target == "distclean":
+            build_status = builder.distclean(app_path)
+        elif args.target == "boardclean":
+            build_status = builder.boardclean(app_path)
+        elif args.target == "info":
+            information = builder.get_build_info(app_path)
+        elif args.target == "size":
+            information = builder.get_build_size(app_path)
         else:
-            target = "all"
-
-        builder = build.embARC_Builder(osproot=args.osp)
-        builder.make_options = " ".join(make_config)
-        build_status = builder.build_target(app_path, target=target)
-
-
-
-    else:
-        if args.board:
-            buildopts["BOARD"] = args.board
-        if args.bd_ver:
-            buildopts["BD_VER"] = args.bd_ver
-        if args.core:
-            buildopts["CUR_CORE"] = args.core
-        if args.toolchain:
-            buildopts["TOOLCHAIN"] = args.toolchain
-
-        builder = build.embARC_Builder(args.osp, buildopts, curdir)
-        # information = builder.get_build_info(app_path)
-
-        if args.target:
-            #information = builder.get_build_info(app_path)
-            if args.target == "elf":
-                build_status = builder.build_elf(app_path, parallel=parallel, pre_clean=False, post_clean=False)
-            elif args.target == "bin":
-                build_status = builder.build_bin(app_path, parallel=parallel, pre_clean=False, post_clean=False)
-            elif args.target == "hex":
-                build_status = builder.build_hex(app_path, parallel=parallel, pre_clean=False, post_clean=False)
-            elif args.target == "clean":
-                build_status = builder.clean(app_path)
-            elif args.target == "distclean":
-                build_status = builder.distclean(app_path)
-            elif args.target == "boardclean":
-                build_status = builder.boardclean(app_path)
-            elif args.target == "info":
-                information = builder.get_build_info(app_path)
-            elif args.target == "size":
-                information = builder.get_build_size(app_path)
-            else:
-                print("choose right target")
+            print("choose right target")
 
 
 
 def get_config(config):
     make_configs = dict()
     if type(config) == list:
-        pass
+        if len(config) == 1 and " " in config[0]:
+            config = config[0].split(" ")
+
+
     else:
         config = config.split(" ")
     return config

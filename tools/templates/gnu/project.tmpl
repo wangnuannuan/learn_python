@@ -24,25 +24,25 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
-		{% for path, value in links.items() %}
-		{% for key in value %}
+		{% for path in virtual_folders %}
 		<link>
-			<name>{{key}}</name>
+			<name>{{path}}</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		{% endfor %}
+		{% for path in links %}
 		<link>
-			<name>{{osp_root}}</name>
+			<name>{{path}}</name>
 			<type>2</type>
-			<locationURI>SRCS_ROOT/{{path}}</locationURI>
+			<locationURI>OSP_ROOT/{{path}}</locationURI>
 		</link>
 		{% endfor %}
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>OSP_ROOT</name>
-			<value>{{root}}</value>
+			<value>file:/{{root}}</value>
 		</variable>
 	</variableList>
 </projectDescription>

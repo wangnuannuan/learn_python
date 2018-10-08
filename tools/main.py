@@ -1,6 +1,6 @@
 from __future__ import print_function, absolute_import
 import argparse
-import os
+import os, sys
 import pkg_resources
 from tools.commands import new, showconfig, build, show, toolchain, osp, ide
 subcommands = {
@@ -28,8 +28,23 @@ def main():
 
         module.setup(subparser)
         subparser.set_defaults(func=module.run)
+    args = None
 
-    args = parser.parse_args()
+    argv_list = list()
+    if sys.argv[1] == "build":
+        make_list = list()
+        for argv in sys.argv[1:]:
+            if "=" in argv:
+                make_list.append(argv)
+            else:
+                argv_list.append(argv)
+        if len(make_list) > 0 :
+            make_config = " ".join(make_list)
+            argv_list.extend(["--make", make_config])
+        args = parser.parse_args(argv_list)
+    else:
+        args = parser.parse_args()
+
     verbosity = args.verbosity - args.quietness
     return args.func(args)
 

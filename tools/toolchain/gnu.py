@@ -25,7 +25,7 @@ class Gnu(arcToolchain):
     notifier = TerminalNotifier()
 
     def __init__(self):
-        
+
         exe = find_executable(self.executable_name)
         if exe:
             self.path = os.path.split(exe)[0]
