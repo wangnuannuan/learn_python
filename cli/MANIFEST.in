@@ -1,1 +1,0 @@
-recursive-include embarc_tools *.yml *.py *.c  *.yaml *.sh *.tmpl

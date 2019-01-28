@@ -1,1296 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>test result</title>
-    <meta name="generator" content="HTMLTestRunner 0.8.2"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    
-<style type="text/css" media="screen">
-body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
-table       { font-size: 100%; }
-pre         { }
-
-/* -- heading ---------------------------------------------------------------------- */
-h1 {
-	font-size: 16pt;
-	color: gray;
-}
-.heading {
-    margin-top: 0ex;
-    margin-bottom: 1ex;
-}
-
-.heading .attribute {
-    margin-top: 1ex;
-    margin-bottom: 0;
-}
-
-.heading .description {
-    margin-top: 4ex;
-    margin-bottom: 6ex;
-}
-
-/* -- css div popup ------------------------------------------------------------------------ */
-a.popup_link {
-}
-
-a.popup_link:hover {
-    color: red;
-}
-
-.popup_window {
-    display: none;
-    position: relative;
-    left: 0px;
-    top: 0px;
-    /*border: solid #627173 1px; */
-    padding: 10px;
-    background-color: #E6E6D6;
-    font-family: "Lucida Console", "Courier New", Courier, monospace;
-    text-align: left;
-    font-size: 8pt;
-    width: 500px;
-}
-
-}
-/* -- report ------------------------------------------------------------------------ */
-#show_detail_line {
-    margin-top: 3ex;
-    margin-bottom: 1ex;
-}
-#result_table {
-    width: 80%;
-    border-collapse: collapse;
-    border: 1px solid #777;
-}
-#header_row {
-    font-weight: bold;
-    color: white;
-    background-color: #777;
-}
-#result_table td {
-    border: 1px solid #777;
-    padding: 2px;
-}
-#total_row  { font-weight: bold; }
-.passClass  { background-color: #6c6; }
-.failClass  { background-color: #c60; }
-.errorClass { background-color: #c00; }
-.passCase   { color: #6c6; }
-.failCase   { color: #c60; font-weight: bold; }
-.errorCase  { color: #c00; font-weight: bold; }
-.hiddenRow  { display: none; }
-.testcase   { margin-left: 2em; }
-
-
-/* -- ending ---------------------------------------------------------------------- */
-#ending {
-}
-
-</style>
-
-</head>
-<body>
-<script language="javascript" type="text/javascript"><!--
-output_list = Array();
-
-/* level - 0:Summary; 1:Failed; 2:All */
-function showCase(level) {
-    trs = document.getElementsByTagName("tr");
-    for (var i = 0; i < trs.length; i++) {
-        tr = trs[i];
-        id = tr.id;
-        if (id.substr(0,2) == 'ft') {
-            if (level < 1) {
-                tr.className = 'hiddenRow';
-            }
-            else {
-                tr.className = '';
-            }
-        }
-        if (id.substr(0,2) == 'pt') {
-            if (level > 1) {
-                tr.className = '';
-            }
-            else {
-                tr.className = 'hiddenRow';
-            }
-        }
-    }
-}
-
-
-function showClassDetail(cid, count) {
-    var id_list = Array(count);
-    var toHide = 1;
-    for (var i = 0; i < count; i++) {
-        tid0 = 't' + cid.substr(1) + '.' + (i+1);
-        tid = 'f' + tid0;
-        tr = document.getElementById(tid);
-        if (!tr) {
-            tid = 'p' + tid0;
-            tr = document.getElementById(tid);
-        }
-        id_list[i] = tid;
-        if (tr.className) {
-            toHide = 0;
-        }
-    }
-    for (var i = 0; i < count; i++) {
-        tid = id_list[i];
-        if (toHide) {
-            document.getElementById('div_'+tid).style.display = 'none'
-            document.getElementById(tid).className = 'hiddenRow';
-        }
-        else {
-            document.getElementById(tid).className = '';
-        }
-    }
-}
-
-
-function showTestDetail(div_id){
-    var details_div = document.getElementById(div_id)
-    var displayState = details_div.style.display
-    // alert(displayState)
-    if (displayState != 'block' ) {
-        displayState = 'block'
-        details_div.style.display = 'block'
-    }
-    else {
-        details_div.style.display = 'none'
-    }
-}
-
-
-function html_escape(s) {
-    s = s.replace(/&/g,'&amp;');
-    s = s.replace(/</g,'&lt;');
-    s = s.replace(/>/g,'&gt;');
-    return s;
-}
-
-/* obsoleted by detail in <div>
-function showOutput(id, name) {
-    var w = window.open("", //url
-                    name,
-                    "resizable,scrollbars,status,width=800,height=450");
-    d = w.document;
-    d.write("<pre>");
-    d.write(html_escape(output_list[id]));
-    d.write("\n");
-    d.write("<a href='javascript:window.close()'>close</a>\n");
-    d.write("</pre>\n");
-    d.close();
-}
-*/
---></script>
-
-<div class='heading'>
-<h1>test result</h1>
-<p class='attribute'><strong>Start Time:</strong> 2018-10-22 15:35:57</p>
-<p class='attribute'><strong>Duration:</strong> 0:07:26.213000</p>
-<p class='attribute'><strong>Status:</strong> Pass 34</p>
-
-<p class='description'></p>
-</div>
-
-
-
-<p id='show_detail_line'>Show
-<a href='javascript:showCase(0)'>Summary</a>
-<a href='javascript:showCase(1)'>Failed</a>
-<a href='javascript:showCase(2)'>All</a>
-</p>
-<table id='result_table'>
-<colgroup>
-<col align='left' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-</colgroup>
-<tr id='header_row'>
-    <td>Test Group/Test case</td>
-    <td>Count</td>
-    <td>Pass</td>
-    <td>Fail</td>
-    <td>Error</td>
-    <td>View</td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_builder.test_builder.TestBuilder</td>
-    <td>6</td>
-    <td>6</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c1',6)">Detail</a></td>
-</tr>
-
-<tr id='pt1.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_build_bin_hex</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
-        pass</a>
-
-    <div id='div_pt1.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.1: [embARC] Build target: bin 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  bin 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/application/.
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/arc
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/arc/startup
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/common
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/gpio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/iic
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/spi
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/uart
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/mux
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/gpio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/iic
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/spi
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/uart
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/peripheral/flash/w25qxx
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/embARC_generated
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/library/clib
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/ez_sio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/ringbuffer
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/xprintf
-"Copy TCF file C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/configs/11/tcf/arcem6.tcf to obj_emsk_11/gnu_arcem6/embARC_generated/arc.tcf"
-"Generate Metaware compiler argument file obj_emsk_11/gnu_arcem6/embARC_generated/ccac.arg"
-"Generate ARC GNU compiler argument file obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg"
-"Generate nSIM properties file obj_emsk_11/gnu_arcem6/embARC_generated/nsim.props"
-"Generate Metaware Debugger argument file obj_emsk_11/gnu_arcem6/embARC_generated/mdb.arg"
-"Generate ARC core config header file obj_emsk_11/gnu_arcem6/embARC_generated/core_config.h"
-"Generate ARC core config assembler file obj_emsk_11/gnu_arcem6/embARC_generated/core_config.s"
-"Generating Linkfile   : " obj_emsk_11/gnu_arcem6/linker_gnu.ldf
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " main.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/board.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/startup/arc_cxx_support.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/startup/arc_startup.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/gpio/dw_gpio_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/iic/dw_iic_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/spi/dw_spi_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/uart/dw_uart_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/gpio/dw_gpio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/iic/dw_iic.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/spi/dw_spi.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/uart/dw_uart.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/peripheral/flash/w25qxx/spi_flash_w25qxx.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_gpio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_init.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_timer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/mux/mux.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libboard_emsk.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/embARC_test.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/console_io.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ez_sio/ez_sio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ringbuffer/ringbuffer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/xprintf/xprintf.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libmidcommon.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_timer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_cache.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_exception.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_mpu.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_udma.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_connect.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_util.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_exc_asm.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libcpuarc.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/fatfs_dirent.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/malloc.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_sbrk.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_misc.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_syscalls.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/ya_getopt.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_target.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/liblibclib.a
-"Archiving             : " obj_emsk_11/gnu_arcem6/libembarc.a
-"Linking               : " obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.elf
-"Generating Binary obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.bin"
-[embARC] Completed in: (46.1610000134)s  
-[embARC] build successfully
-make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  bin
-46.1610000134
-
-[embARC] Build target: hex 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  hex 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Generating Intel Hex File obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.hex"
-[embARC] Completed in: (4.32600021362)s  
-[embARC] build successfully
-make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  hex
-4.32600021362
-
-[embARC] Build target: distclean 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  distclean 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Clean All"
-C:\Windows\system32\cmd.exe /C if exist  .sc.project   C:\Windows\system32\cmd.exe /C rd /S /Q .sc.project
-C:\Windows\system32\cmd.exe /C rd /S /Q  obj_emsk_11
-[embARC] Completed in: (4.29999995232)s  
-[embARC] build successfully
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt1.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_build_common_check</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
-        pass</a>
-
-    <div id='div_pt1.2' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.2').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.2: test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt1.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_build_elf</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.3')" >
-        pass</a>
-
-    <div id='div_pt1.3' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.3').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.3: [embARC] Build target: all 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  all 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/application/.
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/arc
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/arc/startup
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/common
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/gpio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/iic
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/spi
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/ip/designware/uart
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/board/emsk/drivers/mux
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/gpio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/iic
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/spi
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/ip/designware/uart
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/device/peripheral/flash/w25qxx
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/embARC_generated
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/library/clib
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/ez_sio
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/ringbuffer
-"Creating Directory    : " obj_emsk_11/gnu_arcem6/middleware/common/xprintf
-"Copy TCF file C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/configs/11/tcf/arcem6.tcf to obj_emsk_11/gnu_arcem6/embARC_generated/arc.tcf"
-"Generate Metaware compiler argument file obj_emsk_11/gnu_arcem6/embARC_generated/ccac.arg"
-"Generate ARC GNU compiler argument file obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg"
-"Generate nSIM properties file obj_emsk_11/gnu_arcem6/embARC_generated/nsim.props"
-"Generate Metaware Debugger argument file obj_emsk_11/gnu_arcem6/embARC_generated/mdb.arg"
-"Generate ARC core config header file obj_emsk_11/gnu_arcem6/embARC_generated/core_config.h"
-"Generate ARC core config assembler file obj_emsk_11/gnu_arcem6/embARC_generated/core_config.s"
-"Generating Linkfile   : " obj_emsk_11/gnu_arcem6/linker_gnu.ldf
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " main.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/board.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/startup/arc_cxx_support.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/startup/arc_startup.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/gpio/dw_gpio_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/iic/dw_iic_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/spi/dw_spi_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/ip/designware/uart/dw_uart_obj.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/gpio/dw_gpio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/iic/dw_iic.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/spi/dw_spi.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/uart/dw_uart.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/device/peripheral/flash/w25qxx/spi_flash_w25qxx.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_gpio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_init.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/common/emsk_timer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/drivers/mux/mux.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libboard_emsk.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/embARC_test.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/console_io.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ez_sio/ez_sio.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ringbuffer/ringbuffer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/xprintf/xprintf.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libmidcommon.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_timer.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_cache.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_exception.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_mpu.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_udma.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_connect.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_util.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Assembling            : " C:/Users/jingru/Documents/embarc_application/embarc_osp/arc/arc_exc_asm.s
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/libcpuarc.a
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/fatfs_dirent.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/malloc.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_sbrk.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_misc.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_syscalls.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/ya_getopt.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Compiling             : " C:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib/embARC_target.c
-arc-elf32-gcc: warning: .: linker input file unused because linking not done
-"Archiving             : " obj_emsk_11/gnu_arcem6/liblibclib.a
-"Archiving             : " obj_emsk_11/gnu_arcem6/libembarc.a
-"Linking               : " obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.elf
-[embARC] Completed in: (43.3429999352)s  
-[embARC] build successfully
-make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  all
-43.3429999352
-
-[embARC] Build target: distclean 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  distclean 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Clean All"
-C:\Windows\system32\cmd.exe /C if exist  .sc.project   C:\Windows\system32\cmd.exe /C rd /S /Q .sc.project
-C:\Windows\system32\cmd.exe /C rd /S /Q  obj_emsk_11
-[embARC] Completed in: (4.09800004959)s  
-[embARC] build successfully
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt1.4' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_build_target</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
-        pass</a>
-
-    <div id='div_pt1.4' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.4').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.4: [embARC] Build target: size 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  size 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-[embARC] Completed in: (42.1510000229)s  
-[embARC] build successfully
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt1.5' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_build_info</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
-        pass</a>
-
-    <div id='div_pt1.5' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.5').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.5: [embARC] Build target: opt 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  opt 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-======CURRENT CONFIGURATION=====
-BOARD : emsk
-BD_VER : 11
-CUR_CORE : arcem6
-TOOLCHAIN : gnu
-OLEVEL : O3
-JTAG : usb
-EMBARC_ROOT : C:/Users/jingru/Documents/embarc_application/embarc_osp
-OUT_DIR_ROOT :
-COMPILE_OPT : @obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg -mno-sdata -O3 -g -DBOARD_EMSK -DBOARD_SPI_FREQ=800000 -DCPU_ARC -DCURRENT_CORE=arcem6 -DEMBARC_TCF_GENERATED -DEMBARC_USE_BOARD_MAIN -DHW_VERSION=11 -DLIB_CLIB -DMID_COMMON -DPLATFORM_EMBARC -DTOOLCHAIN=ARC_GNU -D_HAVE_LIBGLOSS_ -D_HEAPSIZE=8192 -D_STACKSIZE=2048 -D__GNU__ . -I. -IC:/Users/jingru/Documents/embarc_application/embarc_osp/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/configs/11 -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/gpio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/iic -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/spi -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/uart -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/ip_hal/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/peripheral/flash/w25qxx -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ez_sio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ringbuffer -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/xprintf -Iobj_emsk_11/gnu_arcem6/embARC_generated -std=gnu99
-CXX_COMPILE_OPT: @obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg -mno-sdata -O3 -g -DBOARD_EMSK -DBOARD_SPI_FREQ=800000 -DCPU_ARC -DCURRENT_CORE=arcem6 -DEMBARC_TCF_GENERATED -DEMBARC_USE_BOARD_MAIN -DHW_VERSION=11 -DLIB_CLIB -DMID_COMMON -DPLATFORM_EMBARC -DTOOLCHAIN=ARC_GNU -D_HAVE_LIBGLOSS_ -D_HEAPSIZE=8192 -D_STACKSIZE=2048 -D__GNU__ . -I. -IC:/Users/jingru/Documents/embarc_application/embarc_osp/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/configs/11 -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/gpio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/iic -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/spi -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/uart -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/ip_hal/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/peripheral/flash/w25qxx -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ez_sio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ringbuffer -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/xprintf -Iobj_emsk_11/gnu_arcem6/embARC_generated
-ASM_OPT : @obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg -mno-sdata -O3 -g -DBOARD_EMSK -DBOARD_SPI_FREQ=800000 -DCPU_ARC -DCURRENT_CORE=arcem6 -DEMBARC_TCF_GENERATED -DEMBARC_USE_BOARD_MAIN -DHW_VERSION=11 -DLIB_CLIB -DMID_COMMON -DPLATFORM_EMBARC -DTOOLCHAIN=ARC_GNU -D_HAVE_LIBGLOSS_ -D_HEAPSIZE=8192 -D_STACKSIZE=2048 -D__GNU__ . -I. -IC:/Users/jingru/Documents/embarc_application/embarc_osp/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board -IC:/Users/jingru/Documents/embarc_application/embarc_osp/board/emsk/configs/11 -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/gpio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/iic -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/spi -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/designware/uart -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/ip/ip_hal/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/device/peripheral/flash/w25qxx -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/inc/arc -IC:/Users/jingru/Documents/embarc_application/embarc_osp/library/clib -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ez_sio -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/ringbuffer -IC:/Users/jingru/Documents/embarc_application/embarc_osp/middleware/common/xprintf -Iobj_emsk_11/gnu_arcem6/embARC_generated -x assembler-with-cpp
-AR_OPT : -rcsT
-LINK_OPT : @obj_emsk_11/gnu_arcem6/embARC_generated/gcc.arg -mno-sdata -nostartfiles -Wl,-M,-Map=obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.map -lm -Wl,--script=obj_emsk_11/gnu_arcem6/linker_gnu.ldf
-DEBUGGER : arc-elf32-gdb
-DBG_HW_FLAGS : -ex "target remote | openocd --pipe -s  c:/arc_gnu/bin/../lib/gcc/arc-elf32/7.3.1/../../../../arc-elf32/bin/../../share/openocd/scripts -f  c:/arc_gnu/bin/../lib/gcc/arc-elf32/7.3.1/../../../../arc-elf32/bin/../../share/openocd/scripts/board/snps_em_sk_v1.cfg" -ex "load"
-MDB_NSIM_OPT :
-[embARC] Completed in: (5.43799996376)s  
-[embARC] build successfully
-[embARC] Build target: info 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  info 
-[embARC] Start to build application
-======CURRENT BUILD INFORMATION=====
-EMBARC_ROOT : C:/Users/jingru/Documents/embarc_application/embarc_osp
-OUT_DIR_ROOT :
-BUILD_OPTION : BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu OLEVEL=O3 V=0 DEBUG=1 SILENT=0
-APPLICATION_NAME : testapp_gnu_arcem6
-APPLICATION_LINKSCRIPT : obj_emsk_11/gnu_arcem6/linker_gnu.ldf
-APPLICATION_ELF : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.elf
-APPLICATION_BIN : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.bin
-APPLICATION_HEX : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.hex
-APPLICATION_MAP : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.map
-APPLICATION_DUMP : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.dump
-APPLICATION_DASM : obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.dasm
-MIDDLEWARE : common
-PERIPHERAL : flash/w25qxx
-[embARC] Completed in: (2.38899993896)s  
-[embARC] build successfully
-{'app_path': 'C:\\Users\\jingru\\Documents\\embarc_tool\\embarc_tool\\test\\testapp', 'build_info': {}, 'time_cost': 5.437999963760376, 'build_cfg': {}, 'reason': '', 'result': True, 'build_msg': '', 'build_cmd': 'make  EMBARC_ROOT=C:\\Users\\jingru\\Documents\\embarc_application\\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  opt', 'build_target': 'opt'}
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt1.6' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_build_size</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.6')" >
-        pass</a>
-
-    <div id='div_pt1.6' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.6').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt1.6: [embARC] Build target: size 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  size 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-[embARC] Completed in: (3.81399989128)s  
-[embARC] build successfully
-+------+--------------------------+
-|      | application Program Size |
-+------+--------------------------+
-| text | 21368                    |
-| data | 1200                     |
-| bss  | 10932                    |
-+------+--------------------------+
-make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  size
-3.81399989128
-"Print Application Program Size"
-   text	   data	    bss	    dec	    hex	filename
-  21368	   1200	  10932	  33500	   82dc	obj_emsk_11/gnu_arcem6/testapp_gnu_arcem6.elf
-
-{'text': 21368, 'data': 1200, 'bss': 10932}
-[embARC] Build target: distclean 
-[embARC] Build command: make  EMBARC_ROOT=C:\Users\jingru\Documents\embarc_application\embarc_osp BOARD=emsk BD_VER=11 CUR_CORE=arcem6 TOOLCHAIN=gnu  distclean 
-[embARC] Read makefile and get configuration 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem6   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to build application
-"Clean All"
-C:\Windows\system32\cmd.exe /C if exist  .sc.project   C:\Windows\system32\cmd.exe /C rd /S /Q .sc.project
-C:\Windows\system32\cmd.exe /C rd /S /Q  obj_emsk_11
-[embARC] Completed in: (3.9470000267)s  
-[embARC] build successfully
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_notify.TestNotify</td>
-    <td>2</td>
-    <td>2</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c2',2)">Detail</a></td>
-</tr>
-
-<tr id='pt2.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_collect_message</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.1')" >
-        pass</a>
-
-    <div id='div_pt2.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt2.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt2.1: test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt2.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_notify</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.2')" >
-        pass</a>
-
-    <div id='div_pt2.2' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt2.2').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt2.2: [embARC] 
-test builder
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_osp.test_osp.TestOSP</td>
-    <td>8</td>
-    <td>8</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c3',8)">Detail</a></td>
-</tr>
-
-<tr id='pt3.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_board_version</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_makefile</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_makefile_config</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.3')" >
-        pass</a>
-
-    <div id='div_pt3.3' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt3.3').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt3.3: [embARC] Read makefile and get configuration 
-[embARC] Makefile doesn't exists
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt3.4' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_path</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.5' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_tcfs</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.6' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_is_osp</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.7' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_set_path</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt3.8' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_support_board</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_osp.test_osp.TestRepo</td>
-    <td>1</td>
-    <td>1</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c4',1)">Detail</a></td>
-</tr>
-
-<tr id='pt4.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_formaturl</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt4.1')" >
-        pass</a>
-
-    <div id='div_pt4.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt4.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt4.1: Downloading |-----------------------------------------------------------| 0.18%Downloading |-----------------------------------------------------------| 0.92%Downloading |-----------------------------------------------------------| 1.65%Downloading |#----------------------------------------------------------| 2.56%Downloading |#----------------------------------------------------------| 3.30%Downloading |##---------------------------------------------------------| 4.03%Downloading |##---------------------------------------------------------| 4.94%Downloading |###--------------------------------------------------------| 5.68%Downloading |###--------------------------------------------------------| 6.41%Downloading |####-------------------------------------------------------| 7.32%Downloading |####-------------------------------------------------------| 8.05%Downloading |#####------------------------------------------------------| 8.97%Downloading |#####------------------------------------------------------| 9.70%Downloading |######----------------------------------------------------| 10.43%Downloading |######----------------------------------------------------| 11.35%Downloading |#######---------------------------------------------------| 12.08%Downloading |#######---------------------------------------------------| 12.81%Downloading |#######---------------------------------------------------| 13.73%Downloading |########--------------------------------------------------| 14.46%Downloading |########--------------------------------------------------| 15.38%Downloading |#########-------------------------------------------------| 16.11%Downloading |#########-------------------------------------------------| 16.84%Downloading |##########------------------------------------------------| 17.76%Downloading |##########------------------------------------------------| 18.49%Downloading |###########-----------------------------------------------| 19.22%Downloading |###########-----------------------------------------------| 19.59%Downloading |###########-----------------------------------------------| 20.14%Downloading |############----------------------------------------------| 20.87%Downloading |############----------------------------------------------| 21.60%Downloading |#############---------------------------------------------| 22.52%Downloading |#############---------------------------------------------| 23.25%Downloading |##############--------------------------------------------| 24.16%Downloading |##############--------------------------------------------| 24.90%Downloading |##############--------------------------------------------| 25.63%Downloading |###############-------------------------------------------| 26.54%Downloading |###############-------------------------------------------| 27.28%Downloading |################------------------------------------------| 28.01%Downloading |################------------------------------------------| 28.92%Downloading |#################-----------------------------------------| 29.66%Downloading |#################-----------------------------------------| 30.57%Downloading |#################-----------------------------------------| 30.94%Downloading |##################----------------------------------------| 31.30%Downloading |##################----------------------------------------| 32.04%Downloading |###################---------------------------------------| 32.95%Downloading |###################---------------------------------------| 33.68%Downloading |###################---------------------------------------| 34.42%Downloading |####################--------------------------------------| 35.33%Downloading |####################--------------------------------------| 36.06%Downloading |#####################-------------------------------------| 36.98%Downloading |#####################-------------------------------------| 37.71%Downloading |######################------------------------------------| 38.44%Downloading |######################------------------------------------| 39.36%Downloading |#######################-----------------------------------| 40.09%Downloading |#######################-----------------------------------| 40.82%Downloading |########################----------------------------------| 41.74%Downloading |########################----------------------------------| 42.47%Downloading |#########################---------------------------------| 43.20%Downloading |#########################---------------------------------| 44.12%Downloading |##########################--------------------------------| 44.85%Downloading |##########################--------------------------------| 45.77%Downloading |##########################--------------------------------| 46.50%Downloading |###########################-------------------------------| 47.23%Downloading |###########################-------------------------------| 48.15%Downloading |############################------------------------------| 48.88%Downloading |############################------------------------------| 49.61%Downloading |#############################-----------------------------| 50.53%Downloading |#############################-----------------------------| 51.26%Downloading |##############################----------------------------| 52.17%Downloading |##############################----------------------------| 52.91%Downloading |###############################---------------------------| 53.64%Downloading |###############################---------------------------| 54.55%Downloading |################################--------------------------| 55.29%Downloading |################################--------------------------| 56.02%Downloading |#################################-------------------------| 56.93%Downloading |#################################-------------------------| 57.30%Downloading |#################################-------------------------| 57.67%Downloading |#################################-------------------------| 58.58%Downloading |##################################------------------------| 59.31%Downloading |##################################------------------------| 60.05%Downloading |###################################-----------------------| 60.96%Downloading |###################################-----------------------| 61.69%Downloading |####################################----------------------| 62.43%Downloading |####################################----------------------| 63.34%Downloading |#####################################---------------------| 64.07%Downloading |#####################################---------------------| 64.81%Downloading |######################################--------------------| 65.72%Downloading |######################################--------------------| 66.45%Downloading |#######################################-------------------| 67.37%Downloading |#######################################-------------------| 68.10%Downloading |#######################################-------------------| 68.83%Downloading |########################################------------------| 69.75%Downloading |########################################------------------| 70.48%Downloading |#########################################-----------------| 71.21%Downloading |#########################################-----------------| 72.13%Downloading |##########################################----------------| 72.86%Downloading |##########################################----------------| 73.78%Downloading |###########################################---------------| 74.51%Downloading |###########################################---------------| 75.24%Downloading |############################################--------------| 76.16%Downloading |############################################--------------| 76.89%Downloading |#############################################-------------| 77.62%Downloading |#############################################-------------| 78.54%Downloading |#############################################-------------| 79.27%Downloading |##############################################------------| 80.00%Downloading |##############################################------------| 80.00%Downloading |##############################################------------| 80.00%Downloading |##############################################------------| 80.38%Downloading |##############################################------------| 80.63%Downloading |##############################################------------| 80.96%Downloading |##############################################------------| 81.01%Downloading |###############################################-----------| 81.15%Downloading |###############################################-----------| 81.25%Downloading |###############################################-----------| 81.35%Downloading |###############################################-----------| 81.44%Downloading |###############################################-----------| 81.97%Downloading |###############################################-----------| 82.02%Downloading |###############################################-----------| 82.21%Downloading |###############################################-----------| 82.36%Downloading |###############################################-----------| 82.45%Downloading |###############################################-----------| 82.60%Downloading |###############################################-----------| 82.69%Downloading |###############################################-----------| 82.74%Downloading |################################################----------| 82.84%Downloading |################################################----------| 82.93%Downloading |################################################----------| 83.03%Downloading |################################################----------| 83.37%Downloading |################################################----------| 83.46%Downloading |################################################----------| 83.65%Downloading |################################################----------| 83.85%Downloading |################################################----------| 83.94%Downloading |################################################----------| 84.09%Downloading |################################################----------| 84.28%Downloading |################################################----------| 84.33%Downloading |#################################################---------| 84.52%Downloading |#################################################---------| 84.66%Downloading |#################################################---------| 84.76%Downloading |#################################################---------| 84.81%Downloading |#################################################---------| 84.95%Downloading |#################################################---------| 85.00%Downloading |#################################################---------| 85.43%Downloading |#################################################---------| 85.53%Downloading |#################################################---------| 85.63%Downloading |#################################################---------| 85.87%Downloading |#################################################---------| 85.91%Downloading |#################################################---------| 86.11%Downloading |#################################################---------| 86.20%Downloading |##################################################--------| 86.44%Downloading |##################################################--------| 86.59%Downloading |##################################################--------| 86.63%Downloading |##################################################--------| 86.73%Downloading |##################################################--------| 86.88%Downloading |##################################################--------| 87.07%Downloading |##################################################--------| 87.16%Downloading |##################################################--------| 87.36%Downloading |##################################################--------| 87.69%Downloading |##################################################--------| 87.84%Downloading |###################################################-------| 87.98%Downloading |###################################################-------| 88.56%Downloading |###################################################-------| 88.70%Downloading |###################################################-------| 88.85%Downloading |###################################################-------| 88.99%Downloading |###################################################-------| 89.04%Downloading |###################################################-------| 89.13%Downloading |###################################################-------| 89.38%Downloading |###################################################-------| 89.47%Downloading |###################################################-------| 89.62%Downloading |####################################################------| 89.90%Downloading |####################################################------| 90.00%Downloading |####################################################------| 90.00%                                                                                
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_project.TestIde</td>
-    <td>5</td>
-    <td>5</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c5',5)">Detail</a></td>
-</tr>
-
-<tr id='pt5.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test__dict_elim_none</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.1')" >
-        pass</a>
-
-    <div id='div_pt5.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt5.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt5.1: [embARC] Start to generate IDE project 
-{'a': [1, 2, 3, 4, 5, 5], 'b': [1, 2, 1, 3, 1]}
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt5.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_generate</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.2')" >
-        pass</a>
-
-    <div id='div_pt5.2' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt5.2').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt5.2: [embARC] Start to generate IDE project 
-[embARC] Read makefile and get configuration 
-[embARC] Get inculdes and defines 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem4   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-[embARC] Start to generate IDE project accroding to templates (.project.tmpl and .cproject.tmpl)
-[embARC] Finish generate IDE project and the files are in C:\Users\jingru\Documents\embarc_tool\embarc_tool\test\testapp
-[embARC] Open ARC GNU IDE (version) Eclipse - &gt;File &gt;Open Projects from File System &gt;Paste C:\Users\jingru\Documents\embarc_tool\embarc_tool\test\testapp
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt5.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_project_conf_template</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.3')" >
-        pass</a>
-
-    <div id='div_pt5.3' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt5.3').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt5.3: [embARC] Start to generate IDE project 
-[embARC] Read makefile and get configuration 
-[embARC] Get inculdes and defines 
-[embARC] Current configuration 
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| APPL    | BOARD | BD_VER | CUR_CORE | TOOLCHAIN | EMBARC_OSP_ROOT                                         |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-| testapp | emsk  | 11     | arcem4   | gnu       | C:\Users\jingru\Documents\embarc_application\embarc_osp |
-+---------+-------+--------+----------+-----------+---------------------------------------------------------+
-['testapp', u'testapp/embARC/arc', u'testapp/embARC/board', u'testapp/embARC/board/emsk/configs/11', u'testapp/embARC/device', u'testapp/embARC/device/inc', u'testapp/embARC/device/ip/designware/gpio', u'testapp/embARC/device/ip/designware/iic', u'testapp/embARC/device/ip/designware/spi', u'testapp/embARC/device/ip/designware/uart', u'testapp/embARC/device/ip/ip_hal/inc', u'testapp/embARC/device/peripheral/flash/w25qxx', u'testapp/embARC/inc', u'testapp/embARC/inc/arc', u'testapp/embARC/library/clib', u'testapp/embARC/middleware/common', u'testapp/embARC/middleware/common/ez_sio', u'testapp/embARC/middleware/common/ringbuffer', u'testapp/embARC/middleware/common/xprintf', u'testapp/embARC/obj_emsk_11/gnu_arcem4/embARC_generated']
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt5.4' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_list_elim_none</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.4')" >
-        pass</a>
-
-    <div id='div_pt5.4' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt5.4').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt5.4: [embARC] Start to generate IDE project 
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt5.5' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_set_link_folders</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt5.5')" >
-        pass</a>
-
-    <div id='div_pt5.5' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt5.5').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt5.5: [embARC] Start to generate IDE project 
-['inc', 'options', 'arc', 'device\\ip', 'device\\inc']
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_toolchain.test_gnu.TestToolchain</td>
-    <td>6</td>
-    <td>6</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c6',6)">Detail</a></td>
-</tr>
-
-<tr id='pt6.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_check_version</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.1')" >
-        pass</a>
-
-    <div id='div_pt6.1' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.1').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt6.1: 2018.03
-2018.06
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt6.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_download</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.2')" >
-        pass</a>
-
-    <div id='div_pt6.2' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.2').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt6.2: [37m[embARC] download from (https://github.com/foss-for-synopsys-dwc-arc-processors/toolchain/releases/download/arc-2018.03-release/arc_gnu_2018.03_prebuilt_elf32_le_linux_install.tar.gz)
-[0mdownload  C:\Users\jingru\Documents\embarc_tool\embarc_tool\test\arc_gnu_2018.03_prebuilt_elf32_le_linux_install.tar.gz
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt6.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_extract_file</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.3')" >
-        pass</a>
-
-    <div id='div_pt6.3' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.3').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt6.3: [Errno 2] No such file or directory: 'arc_gnu_2018.03_prebuilt_elf32_le_linux_install.tar.gz'
-gnu pack path:  None
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt6.4' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_get_platform</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt6.5' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_is_support</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt6.6' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_set_toolchain_env</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr class='passClass'>
-    <td>test_utils.TestUtils</td>
-    <td>6</td>
-    <td>6</td>
-    <td>0</td>
-    <td>0</td>
-    <td><a href="javascript:showClassDetail('c7',6)">Detail</a></td>
-</tr>
-
-<tr id='pt7.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_flatten</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt7.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_load_yaml_records</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt7.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_merge_recursive</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt7.3')" >
-        pass</a>
-
-    <div id='div_pt7.3' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt7.3').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt7.3: {'a': 1, 'c': 3, 'b': 4}
-{'a': 1, 'c': 3, 'b': 4}
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt7.4' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_popen</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='pt7.5' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_pquery</div></td>
-    <td colspan='5' align='center'>
-
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt7.5')" >
-        pass</a>
-
-    <div id='div_pt7.5' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt7.5').style.display = 'none' " >
-           [x]</a>
-        </div>
-        <pre>
-        
-pt7.5: 
-
-
-        </pre>
-    </div>
-    <!--css div popup end-->
-
-    </td>
-</tr>
-
-<tr id='pt7.6' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_uniqify</div></td>
-    <td colspan='5' align='center'>pass</td>
-</tr>
-
-<tr id='total_row'>
-    <td>Total</td>
-    <td>34</td>
-    <td>34</td>
-    <td>0</td>
-    <td>0</td>
-    <td>&nbsp;</td>
-</tr>
-</table>
-
-<div id='ending'>&nbsp;</div>
-
-</body>
-</html>
